@@ -1,0 +1,15 @@
+parameters:
+    exceptions:
+        check:
+            missingCheckedExceptionInThrows: true
+            tooWideThrowType: true
+        uncheckedExceptionClasses:
+            - 'Webmozart\Assert\InvalidArgumentException'
+    level: 10
+    paths:
+        - ../src/
+        - ../tests/
+    stubFiles:
+        - 'phpstan/stubs/Symfony/Component/DependencyInjection/Extension/ConfigurableExtensionInterface.stub'
+    tmpDir: ../var/cache/phpstan
+    treatPhpDocTypesAsCertain: false

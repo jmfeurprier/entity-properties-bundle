@@ -1,0 +1,27 @@
+services:
+
+    _defaults:
+        autoconfigure: true
+        autowire:      true
+
+    Jmf\ClassList\ClassesResolverInterface:
+        class: Jmf\ClassList\ClassesResolver
+
+    Jmf\EntityRendering\:
+        resource: '../src/'
+
+    Jmf\EntityRendering\EntityRendering\Definition\EntityDefinitionResolver:
+        arguments:
+            $entityConfigurations: '%jmf_entity_rendering.entity_configurations%'
+
+    Jmf\EntityRendering\EntityRendering\Preset\PresetDefinitionRepository:
+        arguments:
+            $presetConfigurations: '%jmf_entity_rendering.preset_configurations%'
+
+    Jmf\EntityRendering\Twig\EntityRenderingExtension:
+        arguments:
+            $prefix:       '%jmf_entity_rendering.twig_functions_prefix%'
+            $templatePath: '%jmf_entity_rendering.template_path%'
+
+    Jmf\TemplateRendering\TemplateRendererInterface:
+        class: Jmf\TemplateRendering\TemplateRenderer

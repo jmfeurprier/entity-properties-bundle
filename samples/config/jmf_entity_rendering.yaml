@@ -1,0 +1,41 @@
+jmf_entity_rendering:
+
+    entities:
+
+        App\Entity\Article:
+            properties:
+                -
+                    preset: 'label'
+                -
+                    label:  'Content'
+                    source: 'content'
+                -
+                    label:  'Publication Date'
+                    preset: 'date'
+                    source: 'publishedAt'
+
+        App\Entity\Category:
+            properties:
+                -
+                    preset: 'label'
+                -
+                    label:  'Content'
+                    source: 'content'
+                -
+                    label:  'Publication Date'
+                    preset: 'date'
+                    source: 'publishedAt'
+
+    macros: []
+
+    presets:
+        date:
+            template: |-
+                      {%% if (_value is null) %%}
+                        ?
+                      {%% else %%}
+                        {{ _value.format("Y-m-d") }}
+                      {%% endif %%}
+        label:
+            label:  'Label'
+            source: 'label'

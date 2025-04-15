@@ -1,0 +1,10 @@
+<table>
+    <tbody>
+        {% for renderedProperty in renderedEntity.renderedProperties %}
+            <tr>
+                <th>{{ renderedProperty.label|raw }}</th>
+                <td>{{ renderedProperty.value|raw }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>

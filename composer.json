@@ -1,0 +1,40 @@
+{
+    "name": "jmf/entity-rendering-bundle",
+    "description" : "Entity rendering bundle for Symfony",
+    "license": "mit",
+    "type": "library",
+    "require": {
+        "php": ">=8.3",
+        "jmf/class-list": "^2.0",
+        "jmf/template-rendering": "^1.0",
+        "symfony/framework-bundle": "^7.0",
+        "symfony/property-access": "^7.2",
+        "webmozart/assert": "^1.11"
+    },
+    "require-dev": {
+        "phpmd/phpmd": "^2.13",
+        "phpstan/extension-installer": "^1.4",
+        "phpstan/phpstan": "^2.1",
+        "phpstan/phpstan-strict-rules": "^2.0",
+        "phpunit/phpunit": "^12.0",
+        "rector/rector": "^2.0",
+        "squizlabs/php_codesniffer": "^3.8"
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "sort-packages": true,
+        "allow-plugins": {
+            "phpstan/extension-installer": true
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Jmf\\EntityRendering\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Jmf\\EntityRendering\\": "tests/unit/src"
+        }
+    }
+}
