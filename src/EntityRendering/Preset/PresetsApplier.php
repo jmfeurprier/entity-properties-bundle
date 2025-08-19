@@ -3,35 +3,60 @@
 namespace Jmf\EntityRendering\EntityRendering\Preset;
 
 use Jmf\EntityRendering\EntityRendering\Definition\PropertyDefinition;
-use Jmf\EntityRendering\Exceptions\PresetNotFoundException;
+use Jmf\RenderingPreset\Exception\InvalidConfigurationException;
+use Jmf\RenderingPreset\Exception\PresetNotFoundException;
+use Jmf\RenderingPreset\Preset\Preset;
+use Jmf\RenderingPreset\Preset\PresetRepositoryInterface;
+use Webmozart\Assert\Assert;
 
 readonly class PresetsApplier
 {
     public function __construct(
-        private PresetDefinitionRepository $definitionRepository,
+        private PresetRepositoryInterface $presetRepository,
     ) {
     }
 
     /**
+     * @throws InvalidConfigurationException
      * @throws PresetNotFoundException
      */
     public function apply(PropertyDefinition $propertyDefinition): PropertyDefinition
     {
-        $presetId = $propertyDefinition->getPresetId();
+        $preset = $this->getPreset($propertyDefinition);
 
-        if (null === $presetId) {
+        if (null === $preset) {
             return $propertyDefinition;
         }
 
-        $presetDefinition = $this->definitionRepository->get($presetId);
-
-        $newPropertyDefinition = new PropertyDefinition(
-            label:    $propertyDefinition->getLabel() ?? $presetDefinition->getLabel(),
-            source:   $propertyDefinition->getSource() ?? $presetDefinition->getSource(),
-            template: $propertyDefinition->getTemplate() ?? $presetDefinition->getTemplate(),
-            presetId: $presetDefinition->getPresetId(),
+        return new PropertyDefinition(
+            label:    $propertyDefinition->getLabel() ?? $this->getPresetLabel($preset),
+            source:   $propertyDefinition->getSource() ?? $preset->getSource(),
+            template: $propertyDefinition->getTemplate() ?? $preset->getTemplate(),
         );
+    }
 
-        return $this->apply($newPropertyDefinition);
+    /**
+     * @throws InvalidConfigurationException
+     * @throws PresetNotFoundException
+     */
+    private function getPreset(PropertyDefinition $propertyDefinition): ?Preset
+    {
+        $presetId = $propertyDefinition->getPresetId();
+
+        if (null === $presetId) {
+            return null;
+        }
+
+        return $this->presetRepository->getCollection()->get($presetId);
+    }
+
+    private function getPresetLabel(Preset $preset): ?string
+    {
+        $properties  = $preset->getProperties();
+        $presetLabel = $properties->tryGetValue('label');
+
+        Assert::nullOrString($presetLabel);
+
+        return $presetLabel;
     }
 }

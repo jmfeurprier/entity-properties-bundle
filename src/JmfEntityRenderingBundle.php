@@ -15,7 +15,6 @@ class JmfEntityRenderingBundle extends AbstractBundle
      */
     private const array PARAMETERS_MAPPING = [
         'entities'              => 'entity_configurations',
-        'macros'                => 'macros',
         'presets'               => 'preset_configurations',
         'template_path'         => 'template_path',
         'twig_functions_prefix' => 'twig_functions_prefix',

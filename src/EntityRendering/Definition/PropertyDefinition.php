@@ -2,13 +2,15 @@
 
 namespace Jmf\EntityRendering\EntityRendering\Definition;
 
+use Jmf\TemplateRendering\TemplateInterface;
+
 readonly class PropertyDefinition
 {
     public function __construct(
         private ?string $label,
         private ?string $source,
-        private ?string $template,
-        private ?string $presetId,
+        private ?TemplateInterface $template,
+        private ?string $presetId = null,
     ) {
     }
 
@@ -22,7 +24,7 @@ readonly class PropertyDefinition
         return $this->source;
     }
 
-    public function getTemplate(): ?string
+    public function getTemplate(): ?TemplateInterface
     {
         return $this->template;
     }

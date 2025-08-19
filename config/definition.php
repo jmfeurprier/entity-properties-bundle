@@ -5,7 +5,6 @@ use Symfony\Component\Config\Definition\Configurator\DefinitionConfigurator;
 
 return static function (DefinitionConfigurator $definition): void {
     $definition->rootNode()
-        ->fixXmlConfig('macro')
         ->fixXmlConfig('preset')
         ->children()
             ->arrayNode('entities')
@@ -26,10 +25,6 @@ return static function (DefinitionConfigurator $definition): void {
                         ->end()
                     ->end()
                 ->end()
-            ->end()
-            ->arrayNode('macros')
-                ->defaultValue([])
-                ->stringPrototype()->cannotBeEmpty()->end()
             ->end()
             ->arrayNode('presets')
                 ->defaultValue([])

@@ -4,7 +4,8 @@ namespace Jmf\EntityRendering\EntityRendering\Definition;
 
 use Jmf\ClassList\ClassesResolverInterface;
 use Jmf\EntityRendering\Exceptions\EntityConfigurationNotFoundException;
-use Jmf\EntityRendering\Exceptions\PresetNotFoundException;
+use Jmf\EntityRendering\Exceptions\EntityRenderingException;
+use Throwable;
 use Webmozart\Assert\Assert;
 
 readonly class EntityDefinitionResolver
@@ -21,7 +22,7 @@ readonly class EntityDefinitionResolver
 
     /**
      * @throws EntityConfigurationNotFoundException
-     * @throws PresetNotFoundException
+     * @throws EntityRenderingException
      */
     public function resolve(object $entity): EntityDefinition
     {
@@ -76,10 +77,17 @@ readonly class EntityDefinitionResolver
     /**
      * @param array<string, mixed> $propertyConfiguration
      *
-     * @throws PresetNotFoundException
+     * @throws EntityRenderingException
      */
     private function getPropertyDefinition(array $propertyConfiguration): PropertyDefinition
     {
-        return $this->propertyDefinitionResolver->resolve($propertyConfiguration);
+        try {
+            return $this->propertyDefinitionResolver->resolve($propertyConfiguration);
+        } catch (Throwable $e) {
+            // @todo
+            throw new EntityRenderingException(
+                previous: $e,
+            );
+        }
     }
 }

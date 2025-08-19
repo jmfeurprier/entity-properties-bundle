@@ -26,8 +26,6 @@ jmf_entity_rendering:
                     preset: 'date'
                     source: 'publishedAt'
 
-    macros: []
-
     presets:
         date:
             template: |-

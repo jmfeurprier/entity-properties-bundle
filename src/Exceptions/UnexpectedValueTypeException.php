@@ -2,6 +2,7 @@
 
 namespace Jmf\EntityRendering\Exceptions;
 
+use Jmf\TemplateRendering\TemplateInterface;
 use Throwable;
 
 class UnexpectedValueTypeException extends PropertyValueRenderingException
@@ -9,7 +10,7 @@ class UnexpectedValueTypeException extends PropertyValueRenderingException
     public function __construct(
         private readonly object $entity,
         private readonly ?string $source,
-        private readonly ?string $template,
+        private readonly ?TemplateInterface $template,
         private readonly mixed $value,
         ?Throwable $previous = null,
     ) {
@@ -35,11 +36,6 @@ class UnexpectedValueTypeException extends PropertyValueRenderingException
             $tokens[]  = $this->source;
         }
 
-        if (null !== $this->template) {
-            $details[] = 'template: %s';
-            $tokens[]  = $this->template;
-        }
-
         $detailsString = implode(', ', $details);
 
         return vsprintf(
@@ -58,7 +54,7 @@ class UnexpectedValueTypeException extends PropertyValueRenderingException
         return $this->source;
     }
 
-    public function getTemplate(): ?string
+    public function getTemplate(): ?TemplateInterface
     {
         return $this->template;
     }
