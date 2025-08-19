@@ -6,6 +6,7 @@ use Jmf\EntityRendering\EntityRendering\Definition\PropertyDefinition;
 use Jmf\EntityRendering\Exceptions\PropertyValueTemplateRenderingException;
 use Jmf\EntityRendering\Exceptions\UnexpectedValueTypeException;
 use Jmf\EntityRendering\Exceptions\UnreadablePropertyValueException;
+use Jmf\TemplateRendering\TemplateInterface;
 use Jmf\TemplateRendering\TemplateRendererInterface;
 use Stringable;
 use Symfony\Component\PropertyAccess\PropertyAccessor;
@@ -69,6 +70,8 @@ readonly class PropertyValueRenderer
             return '';
         }
 
+        // @todo HTML-escape value.
+
         try {
             return $this->propertyAccessor->getValue($entity, $source);
         } catch (Throwable $e) {
@@ -84,7 +87,7 @@ readonly class PropertyValueRenderer
      * @throws PropertyValueTemplateRenderingException
      */
     private function tryGetValueFromTemplate(
-        ?string $template,
+        ?TemplateInterface $template,
         object $entity,
         mixed $value,
     ): mixed {
@@ -93,7 +96,7 @@ readonly class PropertyValueRenderer
         }
 
         try {
-            return $this->templateRenderer->renderFromString(
+            return $this->templateRenderer->render(
                 $template,
                 [
                     '_item'  => $entity,

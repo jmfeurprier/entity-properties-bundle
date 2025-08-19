@@ -3,7 +3,9 @@
 namespace Jmf\EntityRendering\EntityRendering\Definition;
 
 use Jmf\EntityRendering\EntityRendering\Preset\PresetsApplier;
-use Jmf\EntityRendering\Exceptions\PresetNotFoundException;
+use Jmf\RenderingPreset\Exception\InvalidConfigurationException;
+use Jmf\RenderingPreset\Exception\PresetNotFoundException;
+use Jmf\TemplateRendering\StringTemplate;
 use Webmozart\Assert\Assert;
 
 readonly class PropertyDefinitionResolver
@@ -16,14 +18,25 @@ readonly class PropertyDefinitionResolver
     /**
      * @param array<string, mixed> $propertyConfiguration
      *
+     * @throws InvalidConfigurationException
      * @throws PresetNotFoundException
      */
     public function resolve(array $propertyConfiguration): PropertyDefinition
     {
+        $template = null;
+        $string   = $propertyConfiguration['template'] ?? null;
+
+        if (null !== $string) {
+            Assert::stringNotEmpty($string);
+
+            // @todo
+            $template = new StringTemplate($string);
+        }
+
         $propertyDefinition = new PropertyDefinition(
             label:    $this->getOptionalString($propertyConfiguration, 'label'),
             source:   $this->getOptionalString($propertyConfiguration, 'source'),
-            template: $this->getOptionalString($propertyConfiguration, 'template'),
+            template: $template,
             presetId: $this->getOptionalString($propertyConfiguration, 'preset'),
         );
 

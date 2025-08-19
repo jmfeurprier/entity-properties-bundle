@@ -14,10 +14,6 @@ services:
         arguments:
             $entityConfigurations: '%jmf_entity_rendering.entity_configurations%'
 
-    Jmf\EntityRendering\EntityRendering\Preset\PresetDefinitionRepository:
-        arguments:
-            $presetConfigurations: '%jmf_entity_rendering.preset_configurations%'
-
     Jmf\EntityRendering\Twig\EntityRenderingExtension:
         arguments:
             $prefix:       '%jmf_entity_rendering.twig_functions_prefix%'

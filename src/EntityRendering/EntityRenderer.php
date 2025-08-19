@@ -6,6 +6,7 @@ use Jmf\EntityRendering\EntityRendering\Definition\EntityDefinitionResolver;
 use Jmf\EntityRendering\EntityRendering\Definition\PropertyDefinition;
 use Jmf\EntityRendering\EntityRendering\PropertyRendering\PropertyRenderer;
 use Jmf\EntityRendering\Exceptions\EntityConfigurationNotFoundException;
+use Jmf\EntityRendering\Exceptions\EntityRenderingException;
 use Jmf\EntityRendering\Exceptions\PresetNotFoundException;
 use Jmf\EntityRendering\Exceptions\PropertyRenderingException;
 
@@ -21,6 +22,7 @@ readonly class EntityRenderer
      * @throws EntityConfigurationNotFoundException
      * @throws PropertyRenderingException
      * @throws PresetNotFoundException
+     * @throws EntityRenderingException
      */
     public function render(object $entity): RenderedEntity
     {
@@ -40,7 +42,7 @@ readonly class EntityRenderer
      * @return PropertyDefinition[]
      *
      * @throws EntityConfigurationNotFoundException
-     * @throws PresetNotFoundException
+     * @throws EntityRenderingException
      */
     private function getPropertyDefinitions(object $entity): iterable
     {
