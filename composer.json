@@ -13,6 +13,7 @@
         "webmozart/assert": "^1.0|^2.0"
     },
     "require-dev": {
+        "overtrue/phplint": "^9.7",
         "phpstan/phpstan": "^2.1",
         "phpstan/phpstan-strict-rules": "^2.0",
         "phpunit/phpunit": "^12.0",
@@ -21,10 +22,7 @@
     },
     "config": {
         "optimize-autoloader": true,
-        "sort-packages": true,
-        "allow-plugins": {
-            "phpstan/extension-installer": true
-        }
+        "sort-packages": true
     },
     "autoload": {
         "psr-4": {
@@ -33,7 +31,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Jmf\\EntityRendering\\": "tests/unit/src"
+            "Jmf\\EntityRendering\\": "tests/src"
         }
     }
 }
