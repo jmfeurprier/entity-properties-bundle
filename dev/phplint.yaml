@@ -1,4 +1,5 @@
 path:
+    - config
     - src
     - tests
 jobs:         128

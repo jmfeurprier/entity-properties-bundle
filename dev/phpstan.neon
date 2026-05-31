@@ -4,12 +4,18 @@ parameters:
             missingCheckedExceptionInThrows: true
             tooWideThrowType: true
         uncheckedExceptionClasses:
-            - 'Webmozart\Assert\InvalidArgumentException'
+            - 'LogicException'
+            - 'RuntimeException'
+    ignoreErrors:
+        -
+            identifier: 'missingType.checkedException'
+            paths:
+                - '../tests/*'
+            reportUnmatched: false
     level: 10
     paths:
+        - ../config/
         - ../src/
         - ../tests/
-    stubFiles:
-        - 'phpstan/stubs/Symfony/Component/DependencyInjection/Extension/ConfigurableExtensionInterface.stub'
     tmpDir: ../var/cache/phpstan
     treatPhpDocTypesAsCertain: false
