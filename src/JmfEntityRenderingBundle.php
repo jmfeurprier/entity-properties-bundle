@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Jmf\EntityRendering;
 
 use Override;
@@ -28,6 +30,9 @@ class JmfEntityRenderingBundle extends AbstractBundle
         $definition->import('../config/definition.php');
     }
 
+    /**
+     * @param array<string, mixed> $config
+     */
     #[Override]
     public function loadExtension(
         array $config,
