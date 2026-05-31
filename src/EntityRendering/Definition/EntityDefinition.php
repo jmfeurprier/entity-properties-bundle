@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Jmf\EntityRendering\EntityRendering\Definition;
 
 use Webmozart\Assert\Assert;

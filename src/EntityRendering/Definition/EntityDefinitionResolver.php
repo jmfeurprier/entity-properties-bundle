@@ -85,9 +85,7 @@ readonly class EntityDefinitionResolver
             return $this->propertyDefinitionResolver->resolve($propertyConfiguration);
         } catch (Throwable $e) {
             // @todo
-            throw new EntityRenderingException(
-                previous: $e,
-            );
+            throw new EntityRenderingException(message: $e->getMessage(), code: $e->getCode(), previous: $e);
         }
     }
 }

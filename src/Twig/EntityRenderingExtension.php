@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Jmf\EntityRendering\Twig;
 
 use Jmf\EntityRendering\EntityRendering\EntityRenderer;
