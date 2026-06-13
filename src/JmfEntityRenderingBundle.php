@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Jmf\EntityRendering;
 
+use Jmf\EntityRendering\Configuration\EntityConfigurationLoader;
+use Jmf\EntityRendering\Exception\DuplicateEntityException;
 use Override;
 use Symfony\Component\Config\Definition\Configurator\DefinitionConfigurator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -24,6 +26,11 @@ class JmfEntityRenderingBundle extends AbstractBundle
 
     protected string $extensionAlias = 'jmf_entity_rendering';
 
+    public function __construct(
+        private readonly EntityConfigurationLoader $entityConfigurationLoader = new EntityConfigurationLoader(),
+    ) {
+    }
+
     #[Override]
     public function configure(DefinitionConfigurator $definition): void
     {
@@ -32,6 +39,8 @@ class JmfEntityRenderingBundle extends AbstractBundle
 
     /**
      * @param array<string, mixed> $config
+     *
+     * @throws DuplicateEntityException
      */
     #[Override]
     public function loadExtension(
@@ -40,6 +49,8 @@ class JmfEntityRenderingBundle extends AbstractBundle
         ContainerBuilder $builder,
     ): void {
         $container->import('../config/services.yaml');
+
+        $config['entities'] = $this->entityConfigurationLoader->load($config, $builder, $this->extensionAlias);
 
         $this->loadParameters($config, $container);
     }
