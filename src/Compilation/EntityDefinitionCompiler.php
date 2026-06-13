@@ -6,7 +6,7 @@ use Jmf\ClassList\ClassesResolverInterface;
 use Jmf\EntityRendering\Definition\EntityDefinition;
 use Jmf\EntityRendering\Definition\PropertyDefinition;
 use Jmf\EntityRendering\Exception\EntityConfigurationNotFoundException;
-use Jmf\EntityRendering\Exception\EntityRenderingException;
+use Jmf\EntityRendering\Exception\PropertyDefinitionCompilationException;
 use Throwable;
 use Webmozart\Assert\Assert;
 
@@ -24,7 +24,7 @@ readonly class EntityDefinitionCompiler
 
     /**
      * @throws EntityConfigurationNotFoundException
-     * @throws EntityRenderingException
+     * @throws PropertyDefinitionCompilationException
      */
     public function compile(object $entity): EntityDefinition
     {
@@ -79,15 +79,18 @@ readonly class EntityDefinitionCompiler
     /**
      * @param array<string, mixed> $propertyConfiguration
      *
-     * @throws EntityRenderingException
+     * @throws PropertyDefinitionCompilationException
      */
     private function getPropertyDefinition(array $propertyConfiguration): PropertyDefinition
     {
         try {
             return $this->propertyDefinitionCompiler->compile($propertyConfiguration);
         } catch (Throwable $e) {
-            // @todo
-            throw new EntityRenderingException(message: $e->getMessage(), code: $e->getCode(), previous: $e);
+            throw new PropertyDefinitionCompilationException(
+                message:  $e->getMessage(),
+                code:     $e->getCode(),
+                previous: $e,
+            );
         }
     }
 }

@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Jmf\EntityRendering\Exception;
 
-use Exception;
-
-abstract class EntityRenderingException extends Exception
+class PropertyDefinitionCompilationException extends EntityRenderingException
 {
 }

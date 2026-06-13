@@ -6,7 +6,7 @@ use Jmf\ClassList\ClassesResolverInterface;
 use Jmf\EntityRendering\Definition\EntityDefinition;
 use Jmf\EntityRendering\Definition\PropertyDefinition;
 use Jmf\EntityRendering\Exception\EntityConfigurationNotFoundException;
-use Jmf\EntityRendering\Exception\EntityRenderingException;
+use Jmf\EntityRendering\Exception\PropertyDefinitionCompilationException;
 use Override;
 use PHPUnit\Framework\MockObject\Stub;
 use PHPUnit\Framework\TestCase;
@@ -89,7 +89,7 @@ class EntityDefinitionCompilerTest extends TestCase
         $this->whenCompile([], $entity);
     }
 
-    public function testCompileThrowsEntityRenderingExceptionWhenPropertyDefinitionFails(): void
+    public function testCompileThrowsPropertyDefinitionCompilationExceptionWhenPropertyDefinitionFails(): void
     {
         $entity = new stdClass();
 
@@ -114,7 +114,7 @@ class EntityDefinitionCompilerTest extends TestCase
             ],
         ];
 
-        $this->expectException(EntityRenderingException::class);
+        $this->expectException(PropertyDefinitionCompilationException::class);
 
         $this->whenCompile($entityConfigurations, $entity);
     }

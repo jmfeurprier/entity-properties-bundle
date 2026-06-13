@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Jmf\EntityRendering\Twig;
 
+use Jmf\EntityRendering\Exception\PropertyDefinitionCompilationException;
 use Jmf\EntityRendering\Rendering\EntityRenderer;
 use Jmf\EntityRendering\Rendering\RenderedEntity;
 use Jmf\EntityRendering\Exception\EntityConfigurationNotFoundException;
@@ -55,9 +56,9 @@ class EntityRenderingExtension extends AbstractExtension
     /**
      * @throws EntityConfigurationNotFoundException
      * @throws PresetNotFoundException
+     * @throws PropertyDefinitionCompilationException
      * @throws PropertyRenderingException
      * @throws TemplateRenderingException
-     * @throws EntityRenderingException
      */
     public function renderEntity(
         object $entity,
@@ -73,8 +74,8 @@ class EntityRenderingExtension extends AbstractExtension
     /**
      * @throws EntityConfigurationNotFoundException
      * @throws PresetNotFoundException
+     * @throws PropertyDefinitionCompilationException
      * @throws PropertyRenderingException
-     * @throws EntityRenderingException
      */
     public function getRenderedEntity(
         object $entity,
