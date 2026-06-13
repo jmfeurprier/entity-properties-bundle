@@ -11,14 +11,14 @@ use Jmf\EntityRendering\Exception\UnreadablePropertyValueException;
 use Jmf\TemplateRendering\TemplateInterface;
 use Jmf\TemplateRendering\TemplateRendererInterface;
 use Stringable;
-use Symfony\Component\PropertyAccess\PropertyAccessor;
+use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
 use Throwable;
 
 readonly class PropertyValueRenderer
 {
     public function __construct(
         private TemplateRendererInterface $templateRenderer,
-        private PropertyAccessor $propertyAccessor,
+        private PropertyAccessorInterface $propertyAccessor,
     ) {
     }
 
