@@ -2,15 +2,16 @@
 
 declare(strict_types=1);
 
-namespace Jmf\EntityRendering\Definition;
+namespace Jmf\EntityRendering\Compilation;
 
+use Jmf\EntityRendering\Definition\PropertyDefinition;
 use Jmf\EntityRendering\Preset\PresetsApplier;
 use Jmf\RenderingPreset\Exception\InvalidConfigurationException;
 use Jmf\RenderingPreset\Exception\PresetNotFoundException;
 use Jmf\TemplateRendering\StringTemplate;
 use Webmozart\Assert\Assert;
 
-readonly class PropertyDefinitionResolver
+readonly class PropertyDefinitionCompiler
 {
     public function __construct(
         private PresetsApplier $presetsApplier,
@@ -23,7 +24,7 @@ readonly class PropertyDefinitionResolver
      * @throws InvalidConfigurationException
      * @throws PresetNotFoundException
      */
-    public function resolve(array $propertyConfiguration): PropertyDefinition
+    public function compile(array $propertyConfiguration): PropertyDefinition
     {
         $template = null;
         $string   = $propertyConfiguration['template'] ?? null;

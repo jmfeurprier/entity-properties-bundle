@@ -2,8 +2,8 @@
 
 namespace Jmf\EntityRendering\Rendering;
 
+use Jmf\EntityRendering\Compilation\EntityDefinitionCompiler;
 use Jmf\EntityRendering\Definition\EntityDefinition;
-use Jmf\EntityRendering\Definition\EntityDefinitionResolver;
 use Jmf\EntityRendering\Definition\PropertyDefinition;
 use Jmf\EntityRendering\Exception\EntityConfigurationNotFoundException;
 use PHPUnit\Framework\TestCase;
@@ -23,10 +23,10 @@ class EntityRendererTest extends TestCase
         $renderedProp1 = new RenderedProperty('Name', 'John');
         $renderedProp2 = new RenderedProperty('Age', '30');
 
-        $entityDefinitionResolver = $this->createMock(EntityDefinitionResolver::class);
-        $entityDefinitionResolver
+        $entityDefinitionCompiler = $this->createMock(EntityDefinitionCompiler::class);
+        $entityDefinitionCompiler
             ->expects(self::once())
-            ->method('resolve')
+            ->method('compile')
             ->with($entity)
             ->willReturn($entityDefinition);
 
@@ -36,7 +36,7 @@ class EntityRendererTest extends TestCase
             ->method('render')
             ->willReturnOnConsecutiveCalls($renderedProp1, $renderedProp2);
 
-        $renderer = new EntityRenderer($entityDefinitionResolver, $propertyRenderer);
+        $renderer = new EntityRenderer($entityDefinitionCompiler, $propertyRenderer);
         $result   = $renderer->render($entity);
 
         $properties = iterator_to_array($result->getRenderedProperties());
@@ -51,13 +51,13 @@ class EntityRendererTest extends TestCase
         $entity           = new stdClass();
         $entityDefinition = new EntityDefinition([]);
 
-        $entityDefinitionResolver = $this->createStub(EntityDefinitionResolver::class);
-        $entityDefinitionResolver->method('resolve')->willReturn($entityDefinition);
+        $entityDefinitionCompiler = $this->createStub(EntityDefinitionCompiler::class);
+        $entityDefinitionCompiler->method('compile')->willReturn($entityDefinition);
 
         $propertyRenderer = $this->createMock(PropertyRenderer::class);
         $propertyRenderer->expects(self::never())->method('render');
 
-        $renderer = new EntityRenderer($entityDefinitionResolver, $propertyRenderer);
+        $renderer = new EntityRenderer($entityDefinitionCompiler, $propertyRenderer);
         $result   = $renderer->render($entity);
 
         self::assertSame([], iterator_to_array($result->getRenderedProperties()));
@@ -67,12 +67,12 @@ class EntityRendererTest extends TestCase
     {
         $entity = new stdClass();
 
-        $entityDefinitionResolver = $this->createStub(EntityDefinitionResolver::class);
-        $entityDefinitionResolver
-            ->method('resolve')
+        $entityDefinitionCompiler = $this->createStub(EntityDefinitionCompiler::class);
+        $entityDefinitionCompiler
+            ->method('compile')
             ->willThrowException(new EntityConfigurationNotFoundException(entity: $entity));
 
-        $renderer = new EntityRenderer($entityDefinitionResolver, $this->createStub(PropertyRenderer::class));
+        $renderer = new EntityRenderer($entityDefinitionCompiler, $this->createStub(PropertyRenderer::class));
 
         $this->expectException(EntityConfigurationNotFoundException::class);
 

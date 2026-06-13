@@ -1,17 +1,17 @@
 <?php
 
-namespace Jmf\EntityRendering\Definition;
+namespace Jmf\EntityRendering\Compilation;
 
 use Jmf\EntityRendering\Preset\PresetsApplier;
 use Jmf\RenderingPreset\Preset\PresetRepositoryInterface;
 use Override;
 use PHPUnit\Framework\TestCase;
 
-class PropertyDefinitionResolverTest extends TestCase
+class PropertyDefinitionCompilerTest extends TestCase
 {
     private PresetsApplier $presetsApplier;
 
-    private PropertyDefinitionResolver $resolver;
+    private PropertyDefinitionCompiler $compiler;
 
     #[Override]
     protected function setUp(): void
@@ -19,10 +19,10 @@ class PropertyDefinitionResolverTest extends TestCase
         $repository = $this->createStub(PresetRepositoryInterface::class);
 
         $this->presetsApplier = new PresetsApplier($repository);
-        $this->resolver       = new PropertyDefinitionResolver($this->presetsApplier);
+        $this->compiler       = new PropertyDefinitionCompiler($this->presetsApplier);
     }
 
-    public function testResolveWithAllFields(): void
+    public function testCompileWithAllFields(): void
     {
         $config = [
             'label'    => 'My Label',
@@ -30,16 +30,16 @@ class PropertyDefinitionResolverTest extends TestCase
             'template' => '{{ _value|upper }}',
         ];
 
-        $definition = $this->resolver->resolve($config);
+        $definition = $this->compiler->compile($config);
 
         self::assertSame('My Label', $definition->getLabel());
         self::assertSame('myProperty', $definition->getSource());
         self::assertNotNull($definition->getTemplate());
     }
 
-    public function testResolveWithEmptyConfigReturnsNullFields(): void
+    public function testCompileWithEmptyConfigReturnsNullFields(): void
     {
-        $definition = $this->resolver->resolve([]);
+        $definition = $this->compiler->compile([]);
 
         self::assertNull($definition->getLabel());
         self::assertNull($definition->getSource());
@@ -47,18 +47,18 @@ class PropertyDefinitionResolverTest extends TestCase
         self::assertNull($definition->getPresetId());
     }
 
-    public function testResolveWithLabelOnly(): void
+    public function testCompileWithLabelOnly(): void
     {
-        $definition = $this->resolver->resolve(['label' => 'Only Label']);
+        $definition = $this->compiler->compile(['label' => 'Only Label']);
 
         self::assertSame('Only Label', $definition->getLabel());
         self::assertNull($definition->getSource());
         self::assertNull($definition->getTemplate());
     }
 
-    public function testResolveWithSourceOnly(): void
+    public function testCompileWithSourceOnly(): void
     {
-        $definition = $this->resolver->resolve(['source' => 'someField']);
+        $definition = $this->compiler->compile(['source' => 'someField']);
 
         self::assertNull($definition->getLabel());
         self::assertSame('someField', $definition->getSource());

@@ -2,7 +2,7 @@
 
 namespace Jmf\EntityRendering\Rendering;
 
-use Jmf\EntityRendering\Definition\EntityDefinitionResolver;
+use Jmf\EntityRendering\Compilation\EntityDefinitionCompiler;
 use Jmf\EntityRendering\Definition\PropertyDefinition;
 use Jmf\EntityRendering\Exception\EntityConfigurationNotFoundException;
 use Jmf\EntityRendering\Exception\EntityRenderingException;
@@ -12,7 +12,7 @@ use Jmf\EntityRendering\Exception\PropertyRenderingException;
 readonly class EntityRenderer
 {
     public function __construct(
-        private EntityDefinitionResolver $entityDefinitionResolver,
+        private EntityDefinitionCompiler $entityDefinitionCompiler,
         private PropertyRenderer $propertyRenderer,
     ) {
     }
@@ -45,6 +45,6 @@ readonly class EntityRenderer
      */
     private function getPropertyDefinitions(object $entity): iterable
     {
-        return $this->entityDefinitionResolver->resolve($entity)->getPropertyDefinitions();
+        return $this->entityDefinitionCompiler->compile($entity)->getPropertyDefinitions();
     }
 }

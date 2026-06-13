@@ -1,8 +1,10 @@
 <?php
 
-namespace Jmf\EntityRendering\Definition;
+namespace Jmf\EntityRendering\Compilation;
 
 use Jmf\ClassList\ClassesResolverInterface;
+use Jmf\EntityRendering\Definition\EntityDefinition;
+use Jmf\EntityRendering\Definition\PropertyDefinition;
 use Jmf\EntityRendering\Exception\EntityConfigurationNotFoundException;
 use Jmf\EntityRendering\Exception\EntityRenderingException;
 use Override;
@@ -11,20 +13,20 @@ use PHPUnit\Framework\TestCase;
 use RuntimeException;
 use stdClass;
 
-class EntityDefinitionResolverTest extends TestCase
+class EntityDefinitionCompilerTest extends TestCase
 {
-    private PropertyDefinitionResolver&Stub $propertyDefinitionResolver;
+    private PropertyDefinitionCompiler&Stub $propertyDefinitionCompiler;
 
     private ClassesResolverInterface&Stub $classesResolver;
 
     #[Override]
     protected function setUp(): void
     {
-        $this->propertyDefinitionResolver = $this->createStub(PropertyDefinitionResolver::class);
+        $this->propertyDefinitionCompiler = $this->createStub(PropertyDefinitionCompiler::class);
         $this->classesResolver            = $this->createStub(ClassesResolverInterface::class);
     }
 
-    public function testResolveReturnsEntityDefinitionWithPropertyDefinitions(): void
+    public function testCompileReturnsEntityDefinitionWithPropertyDefinitions(): void
     {
         $entity = new stdClass();
 
@@ -33,8 +35,8 @@ class EntityDefinitionResolverTest extends TestCase
             ->willReturn([stdClass::class])
         ;
 
-        $this->propertyDefinitionResolver
-            ->method('resolve')
+        $this->propertyDefinitionCompiler
+            ->method('compile')
             ->willReturnCallback(
                 function (
                     array $config,
@@ -64,7 +66,7 @@ class EntityDefinitionResolverTest extends TestCase
             ],
         ];
 
-        $entityDefinition = $this->whenResolve($entityConfigurations, $entity);
+        $entityDefinition = $this->whenCompile($entityConfigurations, $entity);
 
         $propertyDefinitions = iterator_to_array($entityDefinition->getPropertyDefinitions());
 
@@ -73,7 +75,7 @@ class EntityDefinitionResolverTest extends TestCase
         self::assertSame('Age', $propertyDefinitions[1]->getLabel());
     }
 
-    public function testResolveThrowsEntityConfigurationNotFoundExceptionForUnknownEntity(): void
+    public function testCompileThrowsEntityConfigurationNotFoundExceptionForUnknownEntity(): void
     {
         $entity = new stdClass();
 
@@ -84,10 +86,10 @@ class EntityDefinitionResolverTest extends TestCase
 
         $this->expectException(EntityConfigurationNotFoundException::class);
 
-        $this->whenResolve([], $entity);
+        $this->whenCompile([], $entity);
     }
 
-    public function testResolveThrowsEntityRenderingExceptionWhenPropertyDefinitionFails(): void
+    public function testCompileThrowsEntityRenderingExceptionWhenPropertyDefinitionFails(): void
     {
         $entity = new stdClass();
 
@@ -96,8 +98,8 @@ class EntityDefinitionResolverTest extends TestCase
             ->willReturn([stdClass::class])
         ;
 
-        $this->propertyDefinitionResolver
-            ->method('resolve')
+        $this->propertyDefinitionCompiler
+            ->method('compile')
             ->willThrowException(new RuntimeException('Definition error'))
         ;
 
@@ -114,10 +116,10 @@ class EntityDefinitionResolverTest extends TestCase
 
         $this->expectException(EntityRenderingException::class);
 
-        $this->whenResolve($entityConfigurations, $entity);
+        $this->whenCompile($entityConfigurations, $entity);
     }
 
-    public function testResolveUsesFirstMatchingClassFromHierarchy(): void
+    public function testCompileUsesFirstMatchingClassFromHierarchy(): void
     {
         $entity = new stdClass();
 
@@ -131,8 +133,8 @@ class EntityDefinitionResolverTest extends TestCase
             )
         ;
 
-        $this->propertyDefinitionResolver
-            ->method('resolve')
+        $this->propertyDefinitionCompiler
+            ->method('compile')
             ->willReturn(new PropertyDefinition(label: null, source: null, template: null))
         ;
 
@@ -143,7 +145,7 @@ class EntityDefinitionResolverTest extends TestCase
                 ],
             ],     ];
 
-        $definition = $this->whenResolve($entityConfigurations, $entity);
+        $definition = $this->whenCompile($entityConfigurations, $entity);
 
         self::assertCount(1, iterator_to_array($definition->getPropertyDefinitions()));
     }
@@ -151,16 +153,16 @@ class EntityDefinitionResolverTest extends TestCase
     /**
      * @param array<class-string, array<string, mixed>> $entityConfigurations
      */
-    private function whenResolve(
+    private function whenCompile(
         array $entityConfigurations,
         object $entity,
     ): EntityDefinition {
-        $resolver   = new EntityDefinitionResolver(
-            $this->propertyDefinitionResolver,
+        $compiler = new EntityDefinitionCompiler(
+            $this->propertyDefinitionCompiler,
             $this->classesResolver,
             $entityConfigurations,
         );
 
-        return $resolver->resolve($entity);
+        return $compiler->compile($entity);
     }
 }

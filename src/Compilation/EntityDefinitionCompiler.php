@@ -1,20 +1,22 @@
 <?php
 
-namespace Jmf\EntityRendering\Definition;
+namespace Jmf\EntityRendering\Compilation;
 
 use Jmf\ClassList\ClassesResolverInterface;
+use Jmf\EntityRendering\Definition\EntityDefinition;
+use Jmf\EntityRendering\Definition\PropertyDefinition;
 use Jmf\EntityRendering\Exception\EntityConfigurationNotFoundException;
 use Jmf\EntityRendering\Exception\EntityRenderingException;
 use Throwable;
 use Webmozart\Assert\Assert;
 
-readonly class EntityDefinitionResolver
+readonly class EntityDefinitionCompiler
 {
     /**
      * @param array<class-string, array<string, mixed>> $entityConfigurations
      */
     public function __construct(
-        private PropertyDefinitionResolver $propertyDefinitionResolver,
+        private PropertyDefinitionCompiler $propertyDefinitionCompiler,
         private ClassesResolverInterface $classesResolver,
         private array $entityConfigurations,
     ) {
@@ -24,7 +26,7 @@ readonly class EntityDefinitionResolver
      * @throws EntityConfigurationNotFoundException
      * @throws EntityRenderingException
      */
-    public function resolve(object $entity): EntityDefinition
+    public function compile(object $entity): EntityDefinition
     {
         $propertyDefinitions = [];
 
@@ -82,7 +84,7 @@ readonly class EntityDefinitionResolver
     private function getPropertyDefinition(array $propertyConfiguration): PropertyDefinition
     {
         try {
-            return $this->propertyDefinitionResolver->resolve($propertyConfiguration);
+            return $this->propertyDefinitionCompiler->compile($propertyConfiguration);
         } catch (Throwable $e) {
             // @todo
             throw new EntityRenderingException(message: $e->getMessage(), code: $e->getCode(), previous: $e);
