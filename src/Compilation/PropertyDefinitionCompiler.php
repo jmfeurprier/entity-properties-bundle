@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Jmf\EntityRendering\Compilation;
 
 use Jmf\EntityRendering\Definition\PropertyDefinition;
-use Jmf\EntityRendering\Preset\PresetsApplier;
 use Jmf\RenderingPreset\Exception\InvalidConfigurationException;
 use Jmf\RenderingPreset\Exception\PresetNotFoundException;
 use Jmf\TemplateRendering\StringTemplate;

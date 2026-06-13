@@ -2,7 +2,6 @@
 
 namespace Jmf\EntityRendering\Compilation;
 
-use Jmf\EntityRendering\Preset\PresetsApplier;
 use Jmf\RenderingPreset\Preset\PresetRepositoryInterface;
 use Override;
 use PHPUnit\Framework\TestCase;

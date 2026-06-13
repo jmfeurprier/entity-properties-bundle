@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Jmf\EntityRendering\Preset;
+namespace Jmf\EntityRendering\Compilation;
 
 use Jmf\EntityRendering\Definition\PropertyDefinition;
 use Jmf\RenderingPreset\Exception\InvalidConfigurationException;
