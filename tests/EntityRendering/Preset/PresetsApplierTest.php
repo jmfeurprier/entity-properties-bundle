@@ -4,7 +4,6 @@ namespace Jmf\EntityRendering\EntityRendering\Preset;
 
 use Jmf\EntityRendering\EntityRendering\Definition\PropertyDefinition;
 use Jmf\RenderingPreset\Preset\Preset;
-use Jmf\RenderingPreset\Preset\PresetCollection;
 use Jmf\RenderingPreset\Preset\PresetRepositoryInterface;
 use Jmf\RenderingPreset\Preset\Property\PresetProperty;
 use Jmf\RenderingPreset\Preset\Property\PresetPropertyCollection;
@@ -16,7 +15,7 @@ class PresetsApplierTest extends TestCase
     public function testApplyWithNoPresetIdReturnsDefinitionUnchanged(): void
     {
         $repository = $this->createMock(PresetRepositoryInterface::class);
-        $repository->expects(self::never())->method('getCollection');
+        $repository->expects(self::never())->method('get');
 
         $applier    = new PresetsApplier($repository);
         $definition = new PropertyDefinition(label: 'Label', source: 'field', template: null);
@@ -37,7 +36,7 @@ class PresetsApplierTest extends TestCase
         );
 
         $repository = $this->createStub(PresetRepositoryInterface::class);
-        $repository->method('getCollection')->willReturn(new PresetCollection([$preset]));
+        $repository->method('get')->willReturn($preset);
 
         $applier    = new PresetsApplier($repository);
         $definition = new PropertyDefinition(label: null, source: null, template: null, presetId: 'my_preset');
@@ -63,7 +62,7 @@ class PresetsApplierTest extends TestCase
         );
 
         $repository = $this->createStub(PresetRepositoryInterface::class);
-        $repository->method('getCollection')->willReturn(new PresetCollection([$preset]));
+        $repository->method('get')->willReturn($preset);
 
         $applier    = new PresetsApplier($repository);
         $definition = new PropertyDefinition(
@@ -92,7 +91,7 @@ class PresetsApplierTest extends TestCase
         );
 
         $repository = $this->createStub(PresetRepositoryInterface::class);
-        $repository->method('getCollection')->willReturn(new PresetCollection([$preset]));
+        $repository->method('get')->willReturn($preset);
 
         $applier    = new PresetsApplier($repository);
         $definition = new PropertyDefinition(label: null, source: null, template: null, presetId: 'my_preset');

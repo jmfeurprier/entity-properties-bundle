@@ -49,7 +49,7 @@ readonly class PresetsApplier
             return null;
         }
 
-        return $this->presetRepository->getCollection()->get($presetId);
+        return $this->presetRepository->get($presetId);
     }
 
     private function getPresetLabel(Preset $preset): ?string

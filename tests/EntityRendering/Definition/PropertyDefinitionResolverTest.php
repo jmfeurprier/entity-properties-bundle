@@ -4,7 +4,6 @@ namespace Jmf\EntityRendering\EntityRendering\Definition;
 
 use Jmf\EntityRendering\EntityRendering\Preset\PresetsApplier;
 use Jmf\RenderingPreset\Preset\PresetRepositoryInterface;
-use Jmf\RenderingPreset\Preset\PresetCollection;
 use Override;
 use PHPUnit\Framework\TestCase;
 
@@ -18,7 +17,6 @@ class PropertyDefinitionResolverTest extends TestCase
     protected function setUp(): void
     {
         $repository = $this->createStub(PresetRepositoryInterface::class);
-        $repository->method('getCollection')->willReturn(new PresetCollection([]));
 
         $this->presetsApplier = new PresetsApplier($repository);
         $this->resolver       = new PropertyDefinitionResolver($this->presetsApplier);
