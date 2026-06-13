@@ -22,6 +22,8 @@ class PropertyValueRendererTest extends TestCase
 
     private PropertyAccessor&Stub $propertyAccessor;
 
+    private HtmlEscaper&Stub $htmlEscaper;
+
     private PropertyValueRenderer $renderer;
 
     #[Override]
@@ -29,7 +31,10 @@ class PropertyValueRendererTest extends TestCase
     {
         $this->templateRenderer = $this->createStub(TemplateRendererInterface::class);
         $this->propertyAccessor = $this->createStub(PropertyAccessor::class);
-        $this->renderer         = new PropertyValueRenderer($this->templateRenderer, $this->propertyAccessor);
+        $this->htmlEscaper      = $this->createStub(HtmlEscaper::class);
+        $this->htmlEscaper->method('escape')->willReturnArgument(0);
+
+        $this->renderer = new PropertyValueRenderer($this->templateRenderer, $this->propertyAccessor, $this->htmlEscaper);
     }
 
     public function testRenderReturnsEmptyStringWhenNoSourceAndNoTemplate(): void
@@ -50,7 +55,7 @@ class PropertyValueRendererTest extends TestCase
             ->willReturn('John')
         ;
 
-        $renderer   = new PropertyValueRenderer($this->templateRenderer, $propertyAccessor);
+        $renderer   = new PropertyValueRenderer($this->templateRenderer, $propertyAccessor, $this->htmlEscaper);
         $definition = new PropertyDefinition(label: null, source: 'name', template: null);
 
         self::assertSame('John', $renderer->render($definition, $entity));
@@ -162,7 +167,7 @@ class PropertyValueRendererTest extends TestCase
             ->willReturn('rendered')
         ;
 
-        $renderer   = new PropertyValueRenderer($templateRenderer, $this->propertyAccessor);
+        $renderer   = new PropertyValueRenderer($templateRenderer, $this->propertyAccessor, $this->htmlEscaper);
         $definition = new PropertyDefinition(label: null, source: null, template: $template);
 
         self::assertSame('rendered', $renderer->render($definition, $entity));
@@ -189,7 +194,7 @@ class PropertyValueRendererTest extends TestCase
             ->willReturn('processed')
         ;
 
-        $renderer   = new PropertyValueRenderer($templateRenderer, $propertyAccessor);
+        $renderer   = new PropertyValueRenderer($templateRenderer, $propertyAccessor, $this->htmlEscaper);
         $definition = new PropertyDefinition(label: null, source: 'field', template: $template);
 
         self::assertSame('processed', $renderer->render($definition, $entity));
@@ -204,7 +209,7 @@ class PropertyValueRendererTest extends TestCase
             ->willThrowException(new TemplateRenderingException('Template error'))
         ;
 
-        $renderer   = new PropertyValueRenderer($templateRenderer, $this->propertyAccessor);
+        $renderer   = new PropertyValueRenderer($templateRenderer, $this->propertyAccessor, $this->htmlEscaper);
         $definition = new PropertyDefinition(label: null, source: null, template: $template);
 
         $this->expectException(PropertyValueTemplateRenderingException::class);

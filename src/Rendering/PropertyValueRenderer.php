@@ -8,6 +8,7 @@ use Jmf\EntityRendering\Definition\PropertyDefinition;
 use Jmf\EntityRendering\Exception\PropertyValueTemplateRenderingException;
 use Jmf\EntityRendering\Exception\UnexpectedValueTypeException;
 use Jmf\EntityRendering\Exception\UnreadablePropertyValueException;
+use Jmf\RenderingPreset\Exception\HtmlEscapingException;
 use Jmf\TemplateRendering\TemplateInterface;
 use Jmf\TemplateRendering\TemplateRendererInterface;
 use Stringable;
@@ -19,10 +20,12 @@ readonly class PropertyValueRenderer
     public function __construct(
         private TemplateRendererInterface $templateRenderer,
         private PropertyAccessorInterface $propertyAccessor,
+        private HtmlEscaper $htmlEscaper,
     ) {
     }
 
     /**
+     * @throws HtmlEscapingException
      * @throws PropertyValueTemplateRenderingException
      * @throws UnexpectedValueTypeException
      * @throws UnreadablePropertyValueException
@@ -39,9 +42,7 @@ readonly class PropertyValueRenderer
         }
 
         $sourceValue = $this->tryGetValueFromSource($entity, $source);
-        $templateValue = $this->tryGetValueFromTemplate($template, $entity, $sourceValue);
-
-        // @todo HTML-escape value?
+        $value       = $this->tryGetValueFromTemplate($template, $entity, $sourceValue);
 
         if ($value instanceof Stringable) {
             $value = (string) $value;
@@ -60,7 +61,11 @@ readonly class PropertyValueRenderer
             );
         }
 
-        return trim($value);
+        $result = trim($value);
+
+        return null !== $template
+            ? $result
+            : $this->htmlEscaper->escape($result);
     }
 
     /**
