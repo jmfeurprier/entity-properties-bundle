@@ -10,6 +10,7 @@ use Jmf\EntityRendering\Exception\PropertyRenderingException;
 use Jmf\EntityRendering\Exception\PropertyValueTemplateRenderingException;
 use Jmf\EntityRendering\Exception\UnexpectedValueTypeException;
 use Jmf\EntityRendering\Exception\UnreadablePropertyValueException;
+use Jmf\RenderingPreset\Exception\HtmlEscapingException;
 use Throwable;
 
 readonly class PropertyRenderer
@@ -52,6 +53,7 @@ readonly class PropertyRenderer
     }
 
     /**
+     * @throws HtmlEscapingException
      * @throws PropertyValueTemplateRenderingException
      * @throws UnexpectedValueTypeException
      * @throws UnreadablePropertyValueException

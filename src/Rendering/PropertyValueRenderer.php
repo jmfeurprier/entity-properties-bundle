@@ -37,69 +37,37 @@ readonly class PropertyValueRenderer
         $source   = $propertyDefinition->getSource();
         $template = $propertyDefinition->getTemplate();
 
-        if ((null === $source) && (null === $template)) {
-            return '';
+        if (null !== $template) {
+            return $this->renderWithTemplate($template, $entity, $source);
         }
 
-        $sourceValue = $this->tryGetValueFromSource($entity, $source);
-        $value       = $this->tryGetValueFromTemplate($template, $entity, $sourceValue);
-
-        if ($value instanceof Stringable) {
-            $value = (string) $value;
-        } elseif (null === $value) {
-            $value = '';
-        } elseif (is_scalar($value)) {
-            $value = (string) $value;
-        }
-
-        if (!is_string($value)) {
-            throw new UnexpectedValueTypeException(
-                entity:   $entity,
-                source:   $source,
-                template: $template,
-                value:    $value,
-            );
-        }
-
-        $result = trim($value);
-
-        return null !== $template
-            ? $result
-            : $this->htmlEscaper->escape($result);
-    }
-
-    /**
-     * @throws UnreadablePropertyValueException
-     */
-    private function tryGetValueFromSource(
-        object $entity,
-        ?string $source,
-    ): mixed {
         if (null === $source) {
             return '';
         }
 
-        try {
-            return $this->propertyAccessor->getValue($entity, $source);
-        } catch (Throwable $e) {
-            throw new UnreadablePropertyValueException(
-                entity:   $entity,
-                source:   $source,
-                previous: $e,
-            );
-        }
+        return $this->htmlEscaper->escape(
+            trim(
+                $this->readSourceAsString(
+                    $entity,
+                    $source,
+                ),
+            ),
+        );
     }
 
     /**
      * @throws PropertyValueTemplateRenderingException
+     * @throws UnreadablePropertyValueException
      */
-    private function tryGetValueFromTemplate(
-        ?TemplateInterface $template,
+    private function renderWithTemplate(
+        TemplateInterface $template,
         object $entity,
-        mixed $value,
-    ): mixed {
-        if (null === $template) {
-            return $value;
+        ?string $source,
+    ): string {
+        $sourceValue = '';
+
+        if (null !== $source) {
+            $sourceValue = $this->getEntityValue($entity, $source);
         }
 
         try {
@@ -107,14 +75,62 @@ readonly class PropertyValueRenderer
                 $template,
                 [
                     '_item'  => $entity,
-                    '_value' => $value,
+                    '_value' => $sourceValue,
                 ],
             );
         } catch (Throwable $e) {
             throw new PropertyValueTemplateRenderingException(
                 entity:   $entity,
                 template: $template,
-                value:    $value,
+                value:    $sourceValue,
+                previous: $e,
+            );
+        }
+    }
+
+    /**
+     * @throws UnexpectedValueTypeException
+     * @throws UnreadablePropertyValueException
+     */
+    private function readSourceAsString(
+        object $entity,
+        string $source,
+    ): string {
+        $value = $this->getEntityValue($entity, $source);
+
+        if ($value instanceof Stringable) {
+            return (string) $value;
+        }
+
+        if (null === $value) {
+            return '';
+        }
+
+        if (is_scalar($value)) {
+            return (string) $value;
+        }
+
+        throw new UnexpectedValueTypeException(
+            entity:   $entity,
+            source:   $source,
+            template: null,
+            value:    $value,
+        );
+    }
+
+    /**
+     * @throws UnreadablePropertyValueException
+     */
+    private function getEntityValue(
+        object $entity,
+        string $source,
+    ): mixed {
+        try {
+            return $this->propertyAccessor->getValue($entity, $source);
+        } catch (Throwable $e) {
+            throw new UnreadablePropertyValueException(
+                entity:   $entity,
+                source:   $source,
                 previous: $e,
             );
         }
