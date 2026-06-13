@@ -8,6 +8,9 @@ use Jmf\TemplateRendering\TemplateInterface;
 
 readonly class PropertyDefinition
 {
+    /**
+     * @param null|non-empty-string $presetId
+     */
     public function __construct(
         private ?string $label,
         private ?string $source,
@@ -31,6 +34,9 @@ readonly class PropertyDefinition
         return $this->template;
     }
 
+    /**
+     * @return null|non-empty-string
+     */
     public function getPresetId(): ?string
     {
         return $this->presetId;
