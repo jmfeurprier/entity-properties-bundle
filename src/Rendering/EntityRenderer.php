@@ -1,10 +1,9 @@
 <?php
 
-namespace Jmf\EntityRendering\EntityRendering;
+namespace Jmf\EntityRendering\Rendering;
 
-use Jmf\EntityRendering\EntityRendering\Definition\EntityDefinitionResolver;
-use Jmf\EntityRendering\EntityRendering\Definition\PropertyDefinition;
-use Jmf\EntityRendering\EntityRendering\PropertyRendering\PropertyRenderer;
+use Jmf\EntityRendering\Definition\EntityDefinitionResolver;
+use Jmf\EntityRendering\Definition\PropertyDefinition;
 use Jmf\EntityRendering\Exception\EntityConfigurationNotFoundException;
 use Jmf\EntityRendering\Exception\EntityRenderingException;
 use Jmf\EntityRendering\Exception\PresetNotFoundException;

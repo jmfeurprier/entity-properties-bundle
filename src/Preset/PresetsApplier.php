@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Jmf\EntityRendering\EntityRendering\Preset;
+namespace Jmf\EntityRendering\Preset;
 
-use Jmf\EntityRendering\EntityRendering\Definition\PropertyDefinition;
+use Jmf\EntityRendering\Definition\PropertyDefinition;
 use Jmf\RenderingPreset\Exception\InvalidConfigurationException;
 use Jmf\RenderingPreset\Exception\PresetNotFoundException;
 use Jmf\RenderingPreset\Preset\Preset;

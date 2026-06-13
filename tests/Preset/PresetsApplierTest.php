@@ -1,8 +1,8 @@
 <?php
 
-namespace Jmf\EntityRendering\EntityRendering\Preset;
+namespace Jmf\EntityRendering\Preset;
 
-use Jmf\EntityRendering\EntityRendering\Definition\PropertyDefinition;
+use Jmf\EntityRendering\Definition\PropertyDefinition;
 use Jmf\RenderingPreset\Preset\Preset;
 use Jmf\RenderingPreset\Preset\PresetRepositoryInterface;
 use Jmf\RenderingPreset\Preset\Property\PresetProperty;

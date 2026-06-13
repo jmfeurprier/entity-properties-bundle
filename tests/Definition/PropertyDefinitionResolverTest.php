@@ -1,8 +1,8 @@
 <?php
 
-namespace Jmf\EntityRendering\EntityRendering\Definition;
+namespace Jmf\EntityRendering\Definition;
 
-use Jmf\EntityRendering\EntityRendering\Preset\PresetsApplier;
+use Jmf\EntityRendering\Preset\PresetsApplier;
 use Jmf\RenderingPreset\Preset\PresetRepositoryInterface;
 use Override;
 use PHPUnit\Framework\TestCase;

@@ -2,10 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Jmf\EntityRendering\EntityRendering\PropertyRendering;
+namespace Jmf\EntityRendering\Rendering;
 
-use Jmf\EntityRendering\EntityRendering\Definition\PropertyDefinition;
-use Jmf\EntityRendering\EntityRendering\RenderedProperty;
+use Jmf\EntityRendering\Definition\PropertyDefinition;
 use Jmf\EntityRendering\Exception\PropertyLabelRenderingException;
 use Jmf\EntityRendering\Exception\PropertyRenderingException;
 use Jmf\EntityRendering\Exception\PropertyValueTemplateRenderingException;

@@ -1,8 +1,8 @@
 <?php
 
-namespace Jmf\EntityRendering\EntityRendering\PropertyRendering;
+namespace Jmf\EntityRendering\Rendering;
 
-use Jmf\EntityRendering\EntityRendering\Definition\PropertyDefinition;
+use Jmf\EntityRendering\Definition\PropertyDefinition;
 use Jmf\EntityRendering\Exception\PropertyLabelRenderingException;
 use Jmf\TemplateRendering\Exception\TemplateRenderingException;
 use Jmf\TemplateRendering\TemplateRendererInterface;

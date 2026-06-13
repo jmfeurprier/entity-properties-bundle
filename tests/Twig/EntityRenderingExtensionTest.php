@@ -2,9 +2,9 @@
 
 namespace Jmf\EntityRendering\Twig;
 
-use Jmf\EntityRendering\EntityRendering\EntityRenderer;
-use Jmf\EntityRendering\EntityRendering\RenderedEntity;
-use Jmf\EntityRendering\EntityRendering\RenderedProperty;
+use Jmf\EntityRendering\Rendering\EntityRenderer;
+use Jmf\EntityRendering\Rendering\RenderedEntity;
+use Jmf\EntityRendering\Rendering\RenderedProperty;
 use Jmf\TemplateRendering\TemplateRendererInterface;
 use PHPUnit\Framework\TestCase;
 use stdClass;

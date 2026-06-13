@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Jmf\EntityRendering\EntityRendering;
+namespace Jmf\EntityRendering\Rendering;
 
 readonly class RenderedProperty
 {

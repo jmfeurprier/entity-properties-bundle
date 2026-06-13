@@ -1,6 +1,6 @@
 <?php
 
-namespace Jmf\EntityRendering\EntityRendering;
+namespace Jmf\EntityRendering\Rendering;
 
 use PHPUnit\Framework\TestCase;
 

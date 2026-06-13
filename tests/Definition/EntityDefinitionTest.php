@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Jmf\EntityRendering\EntityRendering\Definition;
+namespace Jmf\EntityRendering\Definition;
 
 use PHPUnit\Framework\TestCase;
 

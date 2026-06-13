@@ -1,11 +1,10 @@
 <?php
 
-namespace Jmf\EntityRendering\EntityRendering;
+namespace Jmf\EntityRendering\Rendering;
 
-use Jmf\EntityRendering\EntityRendering\Definition\EntityDefinition;
-use Jmf\EntityRendering\EntityRendering\Definition\EntityDefinitionResolver;
-use Jmf\EntityRendering\EntityRendering\Definition\PropertyDefinition;
-use Jmf\EntityRendering\EntityRendering\PropertyRendering\PropertyRenderer;
+use Jmf\EntityRendering\Definition\EntityDefinition;
+use Jmf\EntityRendering\Definition\EntityDefinitionResolver;
+use Jmf\EntityRendering\Definition\PropertyDefinition;
 use Jmf\EntityRendering\Exception\EntityConfigurationNotFoundException;
 use PHPUnit\Framework\TestCase;
 use stdClass;

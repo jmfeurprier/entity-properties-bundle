@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Jmf\EntityRendering\Exception;
 
 use Exception;
-use Jmf\EntityRendering\EntityRendering\Definition\PropertyDefinition;
+use Jmf\EntityRendering\Definition\PropertyDefinition;
 use Throwable;
 
 class PropertyRenderingException extends Exception

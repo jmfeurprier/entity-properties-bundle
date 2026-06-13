@@ -10,7 +10,7 @@ services:
     Jmf\EntityRendering\:
         resource: '../src/'
 
-    Jmf\EntityRendering\EntityRendering\Definition\EntityDefinitionResolver:
+    Jmf\EntityRendering\Definition\EntityDefinitionResolver:
         arguments:
             $entityConfigurations: '%jmf_entity_rendering.entity_configurations%'
 

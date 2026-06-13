@@ -1,8 +1,8 @@
 <?php
 
-namespace Jmf\EntityRendering\EntityRendering\PropertyRendering;
+namespace Jmf\EntityRendering\Rendering;
 
-use Jmf\EntityRendering\EntityRendering\Definition\PropertyDefinition;
+use Jmf\EntityRendering\Definition\PropertyDefinition;
 use Jmf\EntityRendering\Exception\PropertyValueTemplateRenderingException;
 use Jmf\EntityRendering\Exception\UnexpectedValueTypeException;
 use Jmf\EntityRendering\Exception\UnreadablePropertyValueException;

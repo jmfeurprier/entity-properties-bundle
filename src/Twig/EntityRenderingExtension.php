@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Jmf\EntityRendering\Twig;
 
-use Jmf\EntityRendering\EntityRendering\EntityRenderer;
-use Jmf\EntityRendering\EntityRendering\RenderedEntity;
+use Jmf\EntityRendering\Rendering\EntityRenderer;
+use Jmf\EntityRendering\Rendering\RenderedEntity;
 use Jmf\EntityRendering\Exception\EntityConfigurationNotFoundException;
 use Jmf\EntityRendering\Exception\EntityRenderingException;
 use Jmf\EntityRendering\Exception\PresetNotFoundException;

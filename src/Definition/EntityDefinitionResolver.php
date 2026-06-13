@@ -1,6 +1,6 @@
 <?php
 
-namespace Jmf\EntityRendering\EntityRendering\Definition;
+namespace Jmf\EntityRendering\Definition;
 
 use Jmf\ClassList\ClassesResolverInterface;
 use Jmf\EntityRendering\Exception\EntityConfigurationNotFoundException;
