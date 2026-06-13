@@ -41,6 +41,8 @@ readonly class PropertyValueRenderer
         $value = $this->tryGetValueFromSource($entity, $source);
         $value = $this->tryGetValueFromTemplate($template, $entity, $value);
 
+        // @todo HTML-escape value?
+
         if ($value instanceof Stringable) {
             $value = (string) $value;
         } elseif (null === $value) {
@@ -71,8 +73,6 @@ readonly class PropertyValueRenderer
         if (null === $source) {
             return '';
         }
-
-        // @todo HTML-escape value.
 
         try {
             return $this->propertyAccessor->getValue($entity, $source);
