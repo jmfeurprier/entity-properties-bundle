@@ -3,9 +3,9 @@
 namespace Jmf\EntityRendering\EntityRendering\PropertyRendering;
 
 use Jmf\EntityRendering\EntityRendering\Definition\PropertyDefinition;
-use Jmf\EntityRendering\Exceptions\PropertyValueTemplateRenderingException;
-use Jmf\EntityRendering\Exceptions\UnexpectedValueTypeException;
-use Jmf\EntityRendering\Exceptions\UnreadablePropertyValueException;
+use Jmf\EntityRendering\Exception\PropertyValueTemplateRenderingException;
+use Jmf\EntityRendering\Exception\UnexpectedValueTypeException;
+use Jmf\EntityRendering\Exception\UnreadablePropertyValueException;
 use Jmf\TemplateRendering\Exception\TemplateRenderingException;
 use Jmf\TemplateRendering\TemplateInterface;
 use Jmf\TemplateRendering\TemplateRendererInterface;

@@ -5,10 +5,10 @@ namespace Jmf\EntityRendering\EntityRendering;
 use Jmf\EntityRendering\EntityRendering\Definition\EntityDefinitionResolver;
 use Jmf\EntityRendering\EntityRendering\Definition\PropertyDefinition;
 use Jmf\EntityRendering\EntityRendering\PropertyRendering\PropertyRenderer;
-use Jmf\EntityRendering\Exceptions\EntityConfigurationNotFoundException;
-use Jmf\EntityRendering\Exceptions\EntityRenderingException;
-use Jmf\EntityRendering\Exceptions\PresetNotFoundException;
-use Jmf\EntityRendering\Exceptions\PropertyRenderingException;
+use Jmf\EntityRendering\Exception\EntityConfigurationNotFoundException;
+use Jmf\EntityRendering\Exception\EntityRenderingException;
+use Jmf\EntityRendering\Exception\PresetNotFoundException;
+use Jmf\EntityRendering\Exception\PropertyRenderingException;
 
 readonly class EntityRenderer
 {

@@ -3,8 +3,8 @@
 namespace Jmf\EntityRendering\EntityRendering\PropertyRendering;
 
 use Jmf\EntityRendering\EntityRendering\Definition\PropertyDefinition;
-use Jmf\EntityRendering\Exceptions\PropertyLabelRenderingException;
-use Jmf\EntityRendering\Exceptions\PropertyRenderingException;
+use Jmf\EntityRendering\Exception\PropertyLabelRenderingException;
+use Jmf\EntityRendering\Exception\PropertyRenderingException;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 

@@ -2,15 +2,17 @@
 
 declare(strict_types=1);
 
-namespace Jmf\EntityRendering\Exceptions;
+namespace Jmf\EntityRendering\Exception;
 
+use Exception;
+use Jmf\EntityRendering\EntityRendering\Definition\PropertyDefinition;
 use Throwable;
 
-class PropertyLabelRenderingException extends EntityRenderingException
+class PropertyRenderingException extends Exception
 {
     public function __construct(
+        private readonly PropertyDefinition $propertyDefinition,
         private readonly object $entity,
-        private readonly string $label,
         ?Throwable $previous = null,
     ) {
         parent::__construct(
@@ -22,15 +24,14 @@ class PropertyLabelRenderingException extends EntityRenderingException
     private function buildMessage(): string
     {
         return sprintf(
-            "Failed rendering property value for entity of type %s (label: %s).",
+            'Failed resolving property for entity of type: %s.',
             $this->entity::class,
-            $this->label,
         );
     }
 
-    public function getLabel(): string
+    public function getPropertyDefinition(): PropertyDefinition
     {
-        return $this->label;
+        return $this->propertyDefinition;
     }
 
     public function getEntity(): object

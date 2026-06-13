@@ -3,7 +3,7 @@
 namespace Jmf\EntityRendering\EntityRendering\PropertyRendering;
 
 use Jmf\EntityRendering\EntityRendering\Definition\PropertyDefinition;
-use Jmf\EntityRendering\Exceptions\PropertyLabelRenderingException;
+use Jmf\EntityRendering\Exception\PropertyLabelRenderingException;
 use Jmf\TemplateRendering\Exception\TemplateRenderingException;
 use Jmf\TemplateRendering\TemplateRendererInterface;
 use PHPUnit\Framework\TestCase;

@@ -3,8 +3,8 @@
 namespace Jmf\EntityRendering\EntityRendering\Definition;
 
 use Jmf\ClassList\ClassesResolverInterface;
-use Jmf\EntityRendering\Exceptions\EntityConfigurationNotFoundException;
-use Jmf\EntityRendering\Exceptions\EntityRenderingException;
+use Jmf\EntityRendering\Exception\EntityConfigurationNotFoundException;
+use Jmf\EntityRendering\Exception\EntityRenderingException;
 use Override;
 use PHPUnit\Framework\MockObject\Stub;
 use PHPUnit\Framework\TestCase;

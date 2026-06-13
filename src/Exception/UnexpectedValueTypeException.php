@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Jmf\EntityRendering\Exceptions;
+namespace Jmf\EntityRendering\Exception;
 
 use Jmf\TemplateRendering\TemplateInterface;
 use Throwable;

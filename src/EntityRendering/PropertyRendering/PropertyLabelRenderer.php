@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Jmf\EntityRendering\EntityRendering\PropertyRendering;
 
 use Jmf\EntityRendering\EntityRendering\Definition\PropertyDefinition;
-use Jmf\EntityRendering\Exceptions\PropertyLabelRenderingException;
+use Jmf\EntityRendering\Exception\PropertyLabelRenderingException;
 use Jmf\TemplateRendering\TemplateRendererInterface;
 use Throwable;
 

@@ -6,11 +6,11 @@ namespace Jmf\EntityRendering\EntityRendering\PropertyRendering;
 
 use Jmf\EntityRendering\EntityRendering\Definition\PropertyDefinition;
 use Jmf\EntityRendering\EntityRendering\RenderedProperty;
-use Jmf\EntityRendering\Exceptions\PropertyLabelRenderingException;
-use Jmf\EntityRendering\Exceptions\PropertyRenderingException;
-use Jmf\EntityRendering\Exceptions\PropertyValueTemplateRenderingException;
-use Jmf\EntityRendering\Exceptions\UnexpectedValueTypeException;
-use Jmf\EntityRendering\Exceptions\UnreadablePropertyValueException;
+use Jmf\EntityRendering\Exception\PropertyLabelRenderingException;
+use Jmf\EntityRendering\Exception\PropertyRenderingException;
+use Jmf\EntityRendering\Exception\PropertyValueTemplateRenderingException;
+use Jmf\EntityRendering\Exception\UnexpectedValueTypeException;
+use Jmf\EntityRendering\Exception\UnreadablePropertyValueException;
 use Throwable;
 
 readonly class PropertyRenderer

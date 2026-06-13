@@ -2,17 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Jmf\EntityRendering\Exceptions;
+namespace Jmf\EntityRendering\Exception;
 
-use Jmf\TemplateRendering\TemplateInterface;
 use Throwable;
 
-class PropertyValueTemplateRenderingException extends PropertyValueRenderingException
+class UnreadablePropertyValueException extends PropertyValueRenderingException
 {
     public function __construct(
         private readonly object $entity,
-        private readonly TemplateInterface $template,
-        private readonly mixed $value,
+        private readonly string $source,
         ?Throwable $previous = null,
     ) {
         parent::__construct(
@@ -24,8 +22,9 @@ class PropertyValueTemplateRenderingException extends PropertyValueRenderingExce
     private function buildMessage(): string
     {
         return sprintf(
-            "Failed rendering property template for entity of type %s.",
+            "Failed readingproperty value for entity of type %s (source: %s).",
             $this->entity::class,
+            $this->source,
         );
     }
 
@@ -34,13 +33,8 @@ class PropertyValueTemplateRenderingException extends PropertyValueRenderingExce
         return $this->entity;
     }
 
-    public function getTemplate(): TemplateInterface
+    public function getSource(): string
     {
-        return $this->template;
-    }
-
-    public function getValue(): mixed
-    {
-        return $this->value;
+        return $this->source;
     }
 }

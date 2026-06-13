@@ -6,10 +6,10 @@ namespace Jmf\EntityRendering\Twig;
 
 use Jmf\EntityRendering\EntityRendering\EntityRenderer;
 use Jmf\EntityRendering\EntityRendering\RenderedEntity;
-use Jmf\EntityRendering\Exceptions\EntityConfigurationNotFoundException;
-use Jmf\EntityRendering\Exceptions\EntityRenderingException;
-use Jmf\EntityRendering\Exceptions\PresetNotFoundException;
-use Jmf\EntityRendering\Exceptions\PropertyRenderingException;
+use Jmf\EntityRendering\Exception\EntityConfigurationNotFoundException;
+use Jmf\EntityRendering\Exception\EntityRenderingException;
+use Jmf\EntityRendering\Exception\PresetNotFoundException;
+use Jmf\EntityRendering\Exception\PropertyRenderingException;
 use Jmf\TemplateRendering\Exception\TemplateRenderingException;
 use Jmf\TemplateRendering\TemplateRendererInterface;
 use Override;
