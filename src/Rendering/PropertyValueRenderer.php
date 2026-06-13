@@ -38,8 +38,8 @@ readonly class PropertyValueRenderer
             return '';
         }
 
-        $value = $this->tryGetValueFromSource($entity, $source);
-        $value = $this->tryGetValueFromTemplate($template, $entity, $value);
+        $sourceValue = $this->tryGetValueFromSource($entity, $source);
+        $templateValue = $this->tryGetValueFromTemplate($template, $entity, $sourceValue);
 
         // @todo HTML-escape value?
 

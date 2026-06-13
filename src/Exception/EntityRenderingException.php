@@ -6,6 +6,7 @@ namespace Jmf\EntityRendering\Exception;
 
 use Exception;
 
+// @todo Make abstract.
 class EntityRenderingException extends Exception
 {
 }

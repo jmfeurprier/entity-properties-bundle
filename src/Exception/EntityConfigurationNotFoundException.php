@@ -6,7 +6,7 @@ namespace Jmf\EntityRendering\Exception;
 
 use Exception;
 
-class EntityConfigurationNotFoundException extends Exception
+class EntityConfigurationNotFoundException extends EntityRenderingException
 {
     public function __construct(
         private readonly object $entity,

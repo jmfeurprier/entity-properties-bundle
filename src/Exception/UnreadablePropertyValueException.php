@@ -22,7 +22,7 @@ class UnreadablePropertyValueException extends PropertyValueRenderingException
     private function buildMessage(): string
     {
         return sprintf(
-            "Failed readingproperty value for entity of type %s (source: %s).",
+            "Failed reading property value for entity of type %s (source: %s).",
             $this->entity::class,
             $this->source,
         );

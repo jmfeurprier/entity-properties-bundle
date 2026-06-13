@@ -8,7 +8,7 @@ use Exception;
 use Jmf\EntityRendering\Definition\PropertyDefinition;
 use Throwable;
 
-class PropertyRenderingException extends Exception
+class PropertyRenderingException extends EntityRenderingException
 {
     public function __construct(
         private readonly PropertyDefinition $propertyDefinition,
