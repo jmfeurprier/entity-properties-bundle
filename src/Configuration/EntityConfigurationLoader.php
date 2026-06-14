@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Jmf\EntityRendering\Configuration;
 
-use Jmf\CrudEngine\Configuration\EntityPathConfig;
 use Jmf\EntityRendering\Exception\DuplicateEntityException;
 use Symfony\Component\Config\Resource\DirectoryResource;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -173,7 +172,7 @@ final readonly class EntityConfigurationLoader
      */
     private function detectDuplicates(
         array $entitiesFromPaths,
-        mixed $inlineEntities,
+        array $inlineEntities,
     ): void {
         $duplicates = array_intersect_key(
             $entitiesFromPaths,

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Jmf\CrudEngine\Configuration;
+namespace Jmf\EntityRendering\Configuration;
 
 readonly class EntityPathConfig
 {
