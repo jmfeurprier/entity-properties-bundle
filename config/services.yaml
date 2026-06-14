@@ -9,6 +9,11 @@ services:
 
     Jmf\EntityRendering\:
         resource: '../src/'
+        exclude:
+            - '../src/Configuration/'
+            - '../src/Definition/'
+            - '../src/Exception/'
+            - '../src/JmfEntityRenderingBundle.php'
 
     Jmf\EntityRendering\Compilation\EntityDefinitionCompiler:
         arguments:
