@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace Jmf\EntityRendering\Compilation;
 
 use Jmf\EntityRendering\Definition\PropertyDefinition;
+use Jmf\EntityRendering\Exception\PresetNotFoundException;
+use Jmf\EntityRendering\Exception\PropertyDefinitionCompilationException;
 use Jmf\RenderingPreset\Exception\InvalidConfigurationException;
-use Jmf\RenderingPreset\Exception\PresetNotFoundException;
+use Jmf\RenderingPreset\Exception\PresetNotFoundException as ExternalPresetNotFoundException;
 use Jmf\RenderingPreset\Preset\Preset;
 use Jmf\RenderingPreset\Preset\PresetRepositoryInterface;
 use Webmozart\Assert\Assert;
@@ -19,8 +21,8 @@ readonly class PresetsApplier
     }
 
     /**
-     * @throws InvalidConfigurationException
      * @throws PresetNotFoundException
+     * @throws PropertyDefinitionCompilationException
      */
     public function apply(PropertyDefinition $propertyDefinition): PropertyDefinition
     {
@@ -39,8 +41,8 @@ readonly class PresetsApplier
     }
 
     /**
-     * @throws InvalidConfigurationException
      * @throws PresetNotFoundException
+     * @throws PropertyDefinitionCompilationException
      */
     private function getPreset(PropertyDefinition $propertyDefinition): ?Preset
     {
@@ -50,7 +52,20 @@ readonly class PresetsApplier
             return null;
         }
 
-        return $this->presetRepository->get($presetId);
+        try {
+            return $this->presetRepository->get($presetId);
+        } catch (ExternalPresetNotFoundException $e) {
+            throw new PresetNotFoundException(
+                presetId: $presetId,
+                previous: $e,
+            );
+        } catch (InvalidConfigurationException $e) {
+            throw new PropertyDefinitionCompilationException(
+                message:  $e->getMessage(),
+                code:     $e->getCode(),
+                previous: $e,
+            );
+        }
     }
 
     private function getPresetLabel(Preset $preset): ?string

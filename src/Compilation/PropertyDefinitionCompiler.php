@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Jmf\EntityRendering\Compilation;
 
 use Jmf\EntityRendering\Definition\PropertyDefinition;
-use Jmf\RenderingPreset\Exception\InvalidConfigurationException;
-use Jmf\RenderingPreset\Exception\PresetNotFoundException;
+use Jmf\EntityRendering\Exception\PresetNotFoundException;
+use Jmf\EntityRendering\Exception\PropertyDefinitionCompilationException;
 use Jmf\TemplateRendering\StringTemplate;
 use Webmozart\Assert\Assert;
 
@@ -20,8 +20,8 @@ readonly class PropertyDefinitionCompiler
     /**
      * @param array<string, mixed> $propertyConfiguration
      *
-     * @throws InvalidConfigurationException
      * @throws PresetNotFoundException
+     * @throws PropertyDefinitionCompilationException
      */
     public function compile(array $propertyConfiguration): PropertyDefinition
     {

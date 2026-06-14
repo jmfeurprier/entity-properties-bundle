@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Jmf\EntityRendering\Rendering;
 
-use Jmf\RenderingPreset\Exception\HtmlEscapingException;
+use Jmf\EntityRendering\Exception\HtmlEscapingException;
 use Jmf\TemplateRendering\TemplateRendererInterface;
 use Override;
 use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;

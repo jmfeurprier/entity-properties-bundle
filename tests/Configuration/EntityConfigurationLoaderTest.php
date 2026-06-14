@@ -12,7 +12,8 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 final class EntityConfigurationLoaderTest extends TestCase
 {
-    private const string NAMESPACE    = 'Jmf\\EntityRendering\\Definition';
+    private const string NAMESPACE = 'Jmf\\EntityRendering\\Definition';
+
     private const string FIXTURES_DIR = __DIR__ . '/fixtures';
 
     private ContainerBuilder $container;
@@ -28,7 +29,12 @@ final class EntityConfigurationLoaderTest extends TestCase
     public function testLoadReturnsEmptyArrayWhenNoFilesAndNoInlineEntities(): void
     {
         $config = [
-            'paths'    => [['path' => '/nonexistent/path', 'namespace' => self::NAMESPACE]],
+            'paths'    => [
+                [
+                    'path'      => '/nonexistent/path',
+                    'namespace' => self::NAMESPACE,
+                ],
+            ],
             'entities' => [],
         ];
 
@@ -38,7 +44,12 @@ final class EntityConfigurationLoaderTest extends TestCase
     public function testLoadReturnsInlineEntitiesWhenNoPathFiles(): void
     {
         $config = [
-            'paths'    => [['path' => '/nonexistent/path', 'namespace' => self::NAMESPACE]],
+            'paths'    => [
+                [
+                    'path'      => '/nonexistent/path',
+                    'namespace' => self::NAMESPACE,
+                ],
+            ],
             'entities' => [
                 EntityDefinition::class => ['properties' => []],
             ],
@@ -52,7 +63,12 @@ final class EntityConfigurationLoaderTest extends TestCase
     public function testLoadReadsEntityFromYamlFile(): void
     {
         $config = [
-            'paths'    => [['path' => self::FIXTURES_DIR, 'namespace' => self::NAMESPACE]],
+            'paths'    => [
+                [
+                    'path'      => self::FIXTURES_DIR,
+                    'namespace' => self::NAMESPACE,
+                ],
+            ],
             'entities' => [],
         ];
 
@@ -64,7 +80,12 @@ final class EntityConfigurationLoaderTest extends TestCase
     public function testLoadMergesPathEntitiesWithInlineEntities(): void
     {
         $config = [
-            'paths'    => [['path' => self::FIXTURES_DIR, 'namespace' => self::NAMESPACE]],
+            'paths'    => [
+                [
+                    'path'      => self::FIXTURES_DIR,
+                    'namespace' => self::NAMESPACE,
+                ],
+            ],
             'entities' => [
                 PropertyDefinition::class => ['properties' => []],
             ],
@@ -79,7 +100,12 @@ final class EntityConfigurationLoaderTest extends TestCase
     public function testLoadThrowsDuplicateEntityExceptionForClassInBothPathAndInline(): void
     {
         $config = [
-            'paths'    => [['path' => self::FIXTURES_DIR, 'namespace' => self::NAMESPACE]],
+            'paths'    => [
+                [
+                    'path'      => self::FIXTURES_DIR,
+                    'namespace' => self::NAMESPACE,
+                ],
+            ],
             'entities' => [
                 EntityDefinition::class => ['properties' => []],
             ],
@@ -93,9 +119,15 @@ final class EntityConfigurationLoaderTest extends TestCase
     public function testLoadThrowsDuplicateEntityExceptionForSameClassAcrossTwoPaths(): void
     {
         $config = [
-            'paths' => [
-                ['path' => self::FIXTURES_DIR, 'namespace' => self::NAMESPACE],
-                ['path' => self::FIXTURES_DIR, 'namespace' => self::NAMESPACE],
+            'paths'    => [
+                [
+                    'path'      => self::FIXTURES_DIR,
+                    'namespace' => self::NAMESPACE,
+                ],
+                [
+                    'path'      => self::FIXTURES_DIR,
+                    'namespace' => self::NAMESPACE,
+                ],
             ],
             'entities' => [],
         ];

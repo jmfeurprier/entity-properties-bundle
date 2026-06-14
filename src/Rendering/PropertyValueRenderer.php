@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace Jmf\EntityRendering\Rendering;
 
 use Jmf\EntityRendering\Definition\PropertyDefinition;
+use Jmf\EntityRendering\Exception\HtmlEscapingException;
 use Jmf\EntityRendering\Exception\PropertyValueTemplateRenderingException;
 use Jmf\EntityRendering\Exception\UnexpectedValueTypeException;
 use Jmf\EntityRendering\Exception\UnreadablePropertyValueException;
-use Jmf\RenderingPreset\Exception\HtmlEscapingException;
 use Jmf\TemplateRendering\TemplateInterface;
 use Jmf\TemplateRendering\TemplateRendererInterface;
 use Stringable;
