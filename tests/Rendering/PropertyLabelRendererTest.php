@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Jmf\EntityRendering\Rendering;
 
 use Jmf\EntityRendering\Definition\PropertyDefinition;
@@ -9,7 +11,7 @@ use Jmf\TemplateRendering\TemplateRendererInterface;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
-class PropertyLabelRendererTest extends TestCase
+final class PropertyLabelRendererTest extends TestCase
 {
     public function testRenderReturnsEmptyStringWhenLabelIsNull(): void
     {

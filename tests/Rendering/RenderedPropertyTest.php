@@ -6,7 +6,7 @@ namespace Jmf\EntityRendering\Rendering;
 
 use PHPUnit\Framework\TestCase;
 
-class RenderedPropertyTest extends TestCase
+final class RenderedPropertyTest extends TestCase
 {
     public function testGetLabel(): void
     {

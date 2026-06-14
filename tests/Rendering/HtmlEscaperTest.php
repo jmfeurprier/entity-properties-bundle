@@ -12,7 +12,7 @@ use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use RuntimeException;
 
-class HtmlEscaperTest extends TestCase
+final class HtmlEscaperTest extends TestCase
 {
     private TemplateRendererInterface&MockObject $templateRenderer;
 

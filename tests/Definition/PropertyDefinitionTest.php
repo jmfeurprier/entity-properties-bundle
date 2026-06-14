@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Jmf\EntityRendering\Definition;
 
 use Jmf\TemplateRendering\TemplateInterface;
 use PHPUnit\Framework\TestCase;
 
-class PropertyDefinitionTest extends TestCase
+final class PropertyDefinitionTest extends TestCase
 {
     public function testGettersReturnConstructorValues(): void
     {

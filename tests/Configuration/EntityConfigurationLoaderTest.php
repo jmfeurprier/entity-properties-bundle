@@ -10,7 +10,7 @@ use Jmf\EntityRendering\Exception\DuplicateEntityException;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
-class EntityConfigurationLoaderTest extends TestCase
+final class EntityConfigurationLoaderTest extends TestCase
 {
     private const string NAMESPACE    = 'Jmf\\EntityRendering\\Definition';
     private const string FIXTURES_DIR = __DIR__ . '/fixtures';

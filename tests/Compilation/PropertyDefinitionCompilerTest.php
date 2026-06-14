@@ -1,24 +1,23 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Jmf\EntityRendering\Compilation;
 
 use Jmf\RenderingPreset\Preset\PresetRepositoryInterface;
 use Override;
 use PHPUnit\Framework\TestCase;
 
-class PropertyDefinitionCompilerTest extends TestCase
+final class PropertyDefinitionCompilerTest extends TestCase
 {
-    private PresetsApplier $presetsApplier;
-
     private PropertyDefinitionCompiler $compiler;
 
     #[Override]
     protected function setUp(): void
     {
-        $repository = $this->createStub(PresetRepositoryInterface::class);
-
-        $this->presetsApplier = new PresetsApplier($repository);
-        $this->compiler       = new PropertyDefinitionCompiler($this->presetsApplier);
+        $repository     = $this->createStub(PresetRepositoryInterface::class);
+        $presetsApplier = new PresetsApplier($repository);
+        $this->compiler = new PropertyDefinitionCompiler($presetsApplier);
     }
 
     public function testCompileWithAllFields(): void

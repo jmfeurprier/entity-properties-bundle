@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Jmf\EntityRendering\Rendering;
 
 use Jmf\EntityRendering\Repository\EntityDefinitionRepository;
@@ -9,7 +11,7 @@ use Jmf\EntityRendering\Exception\EntityConfigurationNotFoundException;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
-class EntityRendererTest extends TestCase
+final class EntityRendererTest extends TestCase
 {
     public function testRenderReturnsRenderedEntityWithAllProperties(): void
     {

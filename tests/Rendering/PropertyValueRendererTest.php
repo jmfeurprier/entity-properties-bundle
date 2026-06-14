@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Jmf\EntityRendering\Rendering;
 
 use Jmf\EntityRendering\Definition\PropertyDefinition;
@@ -16,7 +18,7 @@ use stdClass;
 use Stringable;
 use Symfony\Component\PropertyAccess\PropertyAccessor;
 
-class PropertyValueRendererTest extends TestCase
+final class PropertyValueRendererTest extends TestCase
 {
     private TemplateRendererInterface&Stub $templateRenderer;
 

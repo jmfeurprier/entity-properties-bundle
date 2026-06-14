@@ -6,7 +6,7 @@ namespace Jmf\EntityRendering\Definition;
 
 use PHPUnit\Framework\TestCase;
 
-class EntityDefinitionTest extends TestCase
+final class EntityDefinitionTest extends TestCase
 {
     public function testGetPropertyDefinitionsEmpty(): void
     {

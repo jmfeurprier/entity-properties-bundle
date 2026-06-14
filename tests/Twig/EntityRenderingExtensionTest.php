@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Jmf\EntityRendering\Twig;
 
 use Jmf\EntityRendering\Rendering\EntityRenderer;
@@ -10,7 +12,7 @@ use PHPUnit\Framework\TestCase;
 use stdClass;
 use Twig\TwigFunction;
 
-class EntityRenderingExtensionTest extends TestCase
+final class EntityRenderingExtensionTest extends TestCase
 {
     public function testGetFunctionsReturnsTwoFunctions(): void
     {

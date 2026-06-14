@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Jmf\EntityRendering\Compilation;
 
 use Jmf\EntityRendering\Definition\PropertyDefinition;
@@ -10,7 +12,7 @@ use Jmf\RenderingPreset\Preset\Property\PresetPropertyCollection;
 use Jmf\TemplateRendering\TemplateInterface;
 use PHPUnit\Framework\TestCase;
 
-class PresetsApplierTest extends TestCase
+final class PresetsApplierTest extends TestCase
 {
     public function testApplyWithNoPresetIdReturnsDefinitionUnchanged(): void
     {

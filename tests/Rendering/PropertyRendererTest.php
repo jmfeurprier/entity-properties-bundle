@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Jmf\EntityRendering\Rendering;
 
 use Jmf\EntityRendering\Definition\PropertyDefinition;
@@ -8,7 +10,7 @@ use Jmf\EntityRendering\Exception\PropertyRenderingException;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
-class PropertyRendererTest extends TestCase
+final class PropertyRendererTest extends TestCase
 {
     public function testRenderReturnsRenderedPropertyWithLabelAndValue(): void
     {

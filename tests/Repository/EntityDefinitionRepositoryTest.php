@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Jmf\EntityRendering\Repository;
 
 use Jmf\EntityRendering\Compilation\EntityDefinitionCompiler;
@@ -9,7 +11,7 @@ use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
-class EntityDefinitionRepositoryTest extends TestCase
+final class EntityDefinitionRepositoryTest extends TestCase
 {
     private EntityDefinitionCompiler&MockObject $compiler;
 

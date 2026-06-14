@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Jmf\EntityRendering\Rendering;
 
 use PHPUnit\Framework\TestCase;
 
-class RenderedEntityTest extends TestCase
+final class RenderedEntityTest extends TestCase
 {
     public function testGetRenderedPropertiesEmpty(): void
     {
