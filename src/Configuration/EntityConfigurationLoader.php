@@ -140,8 +140,9 @@ final readonly class EntityConfigurationLoader
                     throw new DuplicateEntityException([$entityClass]);
                 }
 
-                /** @var array<string, mixed>|null $parsed */
                 $parsed = Yaml::parseFile($file->getRealPath(), Yaml::PARSE_CONSTANT);
+
+                Assert::isMap($parsed);
 
                 $entities[$entityClass] = is_array($parsed) ? $parsed : [];
             }
