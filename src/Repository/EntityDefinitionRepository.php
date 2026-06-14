@@ -11,8 +11,10 @@ use Jmf\EntityRendering\Exception\PropertyDefinitionCompilationException;
 
 class EntityDefinitionRepository
 {
-    /** @var array<class-string, EntityDefinition> */
-    private array $cache = [];
+    /**
+     * @var array<class-string, EntityDefinition>
+     */
+    private array $entityDefinitions = [];
 
     public function __construct(
         private readonly EntityDefinitionCompiler $compiler,
@@ -27,10 +29,10 @@ class EntityDefinitionRepository
     {
         $class = $entity::class;
 
-        if (!array_key_exists($class, $this->cache)) {
-            $this->cache[$class] = $this->compiler->compile($entity);
+        if (!array_key_exists($class, $this->entityDefinitions)) {
+            $this->entityDefinitions[$class] = $this->compiler->compile($entity);
         }
 
-        return $this->cache[$class];
+        return $this->entityDefinitions[$class];
     }
 }
