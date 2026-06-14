@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Jmf\EntityRendering\Configuration;
 
+use Jmf\CrudEngine\Configuration\EntityPathConfig;
 use Jmf\EntityRendering\Exception\DuplicateEntityException;
 use Symfony\Component\Config\Resource\DirectoryResource;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -23,7 +24,7 @@ final readonly class EntityConfigurationLoader
      * @param array<string, mixed> $config         resolved `jmf_entity_rendering` config (`paths` + `entities`)
      * @param string               $extensionAlias used to derive the default path
      *
-     * @return array<string, array<string, mixed>> entity configs keyed by FQCN
+     * @return array<string, array<string, mixed>> Entity configs keyed by FQCN
      *
      * @throws DuplicateEntityException
      */
@@ -32,47 +33,56 @@ final readonly class EntityConfigurationLoader
         ContainerBuilder $container,
         string $extensionAlias,
     ): array {
-        $pathConfigs = $this->resolvePathConfigs($config, $container, $extensionAlias);
+        $pathConfigs = $this->resolvePathConfigs(
+            $config,
+            $container,
+            $extensionAlias,
+        );
 
-        $this->registerResources($pathConfigs, $container);
+        $this->registerResources(
+            $pathConfigs,
+            $container,
+        );
 
         $entitiesFromPaths = $this->loadFromPaths($pathConfigs);
 
-        /** @var array<string, array<string, mixed>> $inlineEntities */
+        Assert::keyExists($config, 'entities');
+        /** @var array<class-string, array<string, mixed>> $inlineEntities */
         $inlineEntities = $config['entities'];
-        Assert::isArray($inlineEntities);
+        Assert::isMap($inlineEntities);
+        Assert::allIsMap($inlineEntities);
 
-        $duplicates = array_intersect_key($entitiesFromPaths, $inlineEntities);
+        $this->detectDuplicates(
+            $entitiesFromPaths,
+            $inlineEntities,
+        );
 
-        if ([] !== $duplicates) {
-            $duplicateTypes = array_keys($duplicates);
-            Assert::allStringNotEmpty($duplicateTypes);
-
-            throw new DuplicateEntityException($duplicateTypes);
-        }
-
-        return $entitiesFromPaths + $inlineEntities;
+        return array_merge(
+            $entitiesFromPaths,
+            $inlineEntities,
+        );
     }
 
     /**
      * @param array<string, mixed> $config
      *
-     * @return list<array{path: string, namespace: string}>
+     * @return EntityPathConfig[]
      */
     private function resolvePathConfigs(
         array $config,
         ContainerBuilder $container,
         string $extensionAlias,
-    ): array {
+    ): iterable {
+        Assert::keyExists($config, 'paths');
         $pathConfigs = $config['paths'];
         Assert::isArray($pathConfigs);
 
         if ([] === $pathConfigs) {
             $pathConfigs = [
-                [
-                    'path'      => '%.kernel.config_dir%/packages/' . $extensionAlias,
-                    'namespace' => 'App\\Entity',
-                ],
+                new EntityPathConfig(
+                    path:      '%.kernel.config_dir%/packages/' . $extensionAlias,
+                    namespace: 'App\\Entity',
+                ),
             ];
         }
 
@@ -80,74 +90,101 @@ final readonly class EntityConfigurationLoader
 
         foreach ($pathConfigs as $pathConfig) {
             Assert::isArray($pathConfig);
-            Assert::string($pathConfig['path']);
-            Assert::string($pathConfig['namespace']);
+            Assert::stringNotEmpty($pathConfig['path']);
+            Assert::stringNotEmpty($pathConfig['namespace']);
 
-            $directory = $container->getParameterBag()->resolveValue($pathConfig['path']);
-            Assert::string($directory);
+            $path = $container->getParameterBag()->resolveValue($pathConfig['path']);
+            Assert::stringNotEmpty($path);
 
-            $resolved[] = [
-                'path'      => $directory,
-                'namespace' => $pathConfig['namespace'],
-            ];
+            $resolved[] = new EntityPathConfig(
+                path:      $path,
+                namespace: $pathConfig['namespace'],
+            );
         }
 
         return $resolved;
     }
 
     /**
-     * @param list<array{path: string, namespace: string}> $pathConfigs
+     * @param EntityPathConfig[] $pathConfigs
      */
     private function registerResources(
-        array $pathConfigs,
+        iterable $pathConfigs,
         ContainerBuilder $container,
     ): void {
         foreach ($pathConfigs as $pathConfig) {
-            if (is_dir($pathConfig['path'])) {
-                $container->addResource(new DirectoryResource($pathConfig['path'], '/\.yaml$/'));
+            if (is_dir($pathConfig->path)) {
+                $container->addResource(
+                    new DirectoryResource(
+                        $pathConfig->path,
+                        '/\.yaml$/',
+                    ),
+                );
             }
         }
     }
 
     /**
-     * @param list<array{path: string, namespace: string}> $pathConfigs
+     * @param EntityPathConfig[] $pathConfigs
      *
-     * @return array<string, array<string, mixed>>
+     * @return array<class-string, array<string, mixed>>
      *
      * @throws DuplicateEntityException
      */
-    private function loadFromPaths(array $pathConfigs): array
+    private function loadFromPaths(iterable $pathConfigs): array
     {
         $entities = [];
 
         foreach ($pathConfigs as $pathConfig) {
-            $directory = $pathConfig['path'];
+            $directory = $pathConfig->path;
 
             if (!is_dir($directory)) {
                 continue;
             }
 
-            $namespace = trim($pathConfig['namespace'], '\\');
+            $namespace = trim($pathConfig->namespace, '\\');
 
             foreach ((new Finder())->files()->in($directory)->name('*.yaml')->sortByName() as $file) {
                 $relativeName = substr($file->getRelativePathname(), 0, -strlen('.yaml'));
                 $class        = str_replace('/', '\\', $relativeName);
                 $entityClass  = '' !== $namespace ? "{$namespace}\\{$class}" : $class;
+                Assert::stringNotEmpty($entityClass);
+                Assert::classExists($entityClass);
 
                 if (isset($entities[$entityClass])) {
-                    Assert::stringNotEmpty($entityClass);
-
                     throw new DuplicateEntityException([$entityClass]);
                 }
 
                 $parsed = Yaml::parseFile($file->getRealPath(), Yaml::PARSE_CONSTANT);
-
                 Assert::isMap($parsed);
 
-                $entities[$entityClass] = is_array($parsed) ? $parsed : [];
+                $entities[$entityClass] = $parsed;
             }
         }
 
         return $entities;
+    }
+
+    /**
+     * @param array<class-string, mixed> $entitiesFromPaths
+     * @param array<class-string, mixed> $inlineEntities
+     *
+     * @throws DuplicateEntityException
+     */
+    private function detectDuplicates(
+        array $entitiesFromPaths,
+        mixed $inlineEntities,
+    ): void {
+        $duplicates = array_intersect_key(
+            $entitiesFromPaths,
+            $inlineEntities,
+        );
+
+        if ([] !== $duplicates) {
+            $duplicateTypes = array_keys($duplicates);
+            Assert::allStringNotEmpty($duplicateTypes);
+
+            throw new DuplicateEntityException($duplicateTypes);
+        }
     }
 }

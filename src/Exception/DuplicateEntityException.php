@@ -7,10 +7,10 @@ namespace Jmf\EntityRendering\Exception;
 class DuplicateEntityException extends EntityRenderingException
 {
     /**
-     * @param non-empty-list<non-empty-string> $entityTypes
+     * @param non-empty-list<class-string> $entityTypes
      */
     public function __construct(
-        private readonly array $entityTypes,
+        private readonly iterable $entityTypes,
     ) {
         parent::__construct(
             sprintf(
@@ -23,7 +23,7 @@ class DuplicateEntityException extends EntityRenderingException
     /**
      * @return non-empty-list<string>
      */
-    public function getEntityTypes(): array
+    public function getEntityTypes(): iterable
     {
         return $this->entityTypes;
     }
