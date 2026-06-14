@@ -2,8 +2,8 @@
 
 namespace Jmf\EntityRendering\Rendering;
 
-use Jmf\EntityRendering\Compilation\EntityDefinitionCompiler;
-use Jmf\EntityRendering\Definition\PropertyDefinition;
+use Jmf\EntityRendering\Repository\EntityDefinitionRepository;
+use Jmf\EntityRendering\Definition\EntityDefinition;
 use Jmf\EntityRendering\Exception\EntityConfigurationNotFoundException;
 use Jmf\EntityRendering\Exception\PresetNotFoundException;
 use Jmf\EntityRendering\Exception\PropertyDefinitionCompilationException;
@@ -12,7 +12,7 @@ use Jmf\EntityRendering\Exception\PropertyRenderingException;
 readonly class EntityRenderer
 {
     public function __construct(
-        private EntityDefinitionCompiler $entityDefinitionCompiler,
+        private EntityDefinitionRepository $entityDefinitionRepository,
         private PropertyRenderer $propertyRenderer,
     ) {
     }
@@ -27,7 +27,7 @@ readonly class EntityRenderer
     {
         $renderedProperties = [];
 
-        foreach ($this->getPropertyDefinitions($entity) as $propertyDefinition) {
+        foreach ($this->getEntityDefinition($entity)->getPropertyDefinitions() as $propertyDefinition) {
             $renderedProperties[] = $this->propertyRenderer->render(
                 $propertyDefinition,
                 $entity,
@@ -38,13 +38,11 @@ readonly class EntityRenderer
     }
 
     /**
-     * @return PropertyDefinition[]
-     *
      * @throws EntityConfigurationNotFoundException
      * @throws PropertyDefinitionCompilationException
      */
-    private function getPropertyDefinitions(object $entity): iterable
+    private function getEntityDefinition(object $entity): EntityDefinition
     {
-        return $this->entityDefinitionCompiler->compile($entity)->getPropertyDefinitions();
+        return $this->entityDefinitionRepository->get($entity);
     }
 }
