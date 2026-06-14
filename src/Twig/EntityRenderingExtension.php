@@ -8,7 +8,6 @@ use Jmf\EntityRendering\Exception\PropertyDefinitionCompilationException;
 use Jmf\EntityRendering\Rendering\EntityRenderer;
 use Jmf\EntityRendering\Rendering\RenderedEntity;
 use Jmf\EntityRendering\Exception\EntityConfigurationNotFoundException;
-use Jmf\EntityRendering\Exception\EntityRenderingException;
 use Jmf\EntityRendering\Exception\PresetNotFoundException;
 use Jmf\EntityRendering\Exception\PropertyRenderingException;
 use Jmf\TemplateRendering\Exception\TemplateRenderingException;

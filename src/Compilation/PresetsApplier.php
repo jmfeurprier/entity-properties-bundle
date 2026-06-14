@@ -34,6 +34,7 @@ readonly class PresetsApplier
             label:    $propertyDefinition->getLabel() ?? $this->getPresetLabel($preset),
             source:   $propertyDefinition->getSource() ?? $preset->getSource(),
             template: $propertyDefinition->getTemplate() ?? $preset->getTemplate(),
+            presetId: $propertyDefinition->getPresetId(),
         );
     }
 

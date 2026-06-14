@@ -22,7 +22,7 @@ class PropertyLabelRenderingException extends EntityRenderingException
     private function buildMessage(): string
     {
         return sprintf(
-            "Failed rendering property value for entity of type %s (label: %s).",
+            "Failed rendering property label for entity of type %s (label: %s).",
             $this->entity::class,
             $this->label,
         );
