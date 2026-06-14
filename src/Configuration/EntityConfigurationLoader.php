@@ -65,7 +65,7 @@ final readonly class EntityConfigurationLoader
     /**
      * @param array<string, mixed> $config
      *
-     * @return EntityPathConfig[]
+     * @return iterable<EntityPathConfig>
      */
     private function resolvePathConfigs(
         array $config,
