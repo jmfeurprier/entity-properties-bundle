@@ -78,10 +78,10 @@ final readonly class EntityConfigurationLoader
 
         if ([] === $pathConfigs) {
             $pathConfigs = [
-                new EntityPathConfig(
-                    path:      '%.kernel.config_dir%/packages/' . $extensionAlias,
-                    namespace: 'App\\Entity',
-                ),
+                [
+                    'path'      => '%.kernel.config_dir%/packages/' . $extensionAlias,
+                    'namespace' => 'App\\Entity',
+                ],
             ];
         }
 
