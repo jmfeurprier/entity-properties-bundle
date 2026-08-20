@@ -6,7 +6,7 @@
     "require": {
         "php": ">=8.3",
         "jmf/class-list": "^2.0",
-        "jmf/rendering-preset-bundle": "^2.0",
+        "jmf/rendering-preset-bundle": "^2.0|^3.0",
         "jmf/template-rendering": "^2.0",
         "symfony/framework-bundle": "^7.0|^8.0",
         "symfony/property-access": "^7.0|^8.0",
