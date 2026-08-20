@@ -36,7 +36,11 @@ final class PropertyValueRendererTest extends TestCase
         $this->htmlEscaper      = $this->createStub(HtmlEscaper::class);
         $this->htmlEscaper->method('escape')->willReturnArgument(0);
 
-        $this->renderer = new PropertyValueRenderer($this->templateRenderer, $this->propertyAccessor, $this->htmlEscaper);
+        $this->renderer = new PropertyValueRenderer(
+            $this->templateRenderer,
+            $this->propertyAccessor,
+            $this->htmlEscaper,
+        );
     }
 
     public function testRenderReturnsEmptyStringWhenNoSourceAndNoTemplate(): void

@@ -62,7 +62,8 @@ final class EntityDefinitionRepositoryTest extends TestCase
     public function testGetCompilesSeparatelyForDifferentClasses(): void
     {
         $entity1     = new stdClass();
-        $entity2     = new class {};
+        $entity2     = new class {
+        };
         $definition1 = new EntityDefinition([]);
         $definition2 = new EntityDefinition([]);
 
